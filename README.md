@@ -8,4 +8,15 @@ Just a little app displaying select video game platforms and games.
 
 Importing components using both class and function to display on the DOM from games.json and platform.json files, respectively. 
 
+### Sort button
+
+Sorts platforms back and forth between most and least games for that platform using sort.
+
+### Games Search Bar
+
+Don't want to scroll through all those games I like? Use the dynamically filtering search bar to show thing ones on my liked list. Uses hooks to alter the state of the games functional component, applying a filter based on what you type thanks to two way binding. Nifty! 
+
+### A great selection of games!
+
+Not all of these are the best games there are, but they are all good, and have some meaning for me. Feel free to try any of them and tell me what you think.
 :+1:
