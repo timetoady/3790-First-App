@@ -6,6 +6,15 @@
 
 }
 
+.theGames div {
+    border: 4px groove #AAA;
+    box-shadow: 2px 3px 2px #DDD;
+    padding: .3rem;
+}
+
+
+        
+
 @media screen and (max-width: 700px) {
 
     .theGames {

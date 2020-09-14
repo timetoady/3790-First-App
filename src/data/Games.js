@@ -12,6 +12,7 @@ function Games(){
     return (
 <div>
 <h2>Very good games list ({allGames.length}): </h2>
+
 <div className="theGames">
   {
       allGames.map(result =>{

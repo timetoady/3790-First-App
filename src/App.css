@@ -23,6 +23,32 @@ padding: 1rem;
 
 }
 
+.theButton {
+	box-shadow:inset 0px -14px 15px 3px #23395e;
+	background:linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+	background-color:#2e466e;
+	border-radius:8px;
+	border:2px solid #1f2f47;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Georgia;
+	font-size:20px;
+	padding:6px 13px;
+	text-decoration:none;
+    text-shadow:-2px 5px 27px #263666;
+    margin-bottom: 2rem;
+}
+.theButton:hover {
+	background:linear-gradient(to bottom, #415989 5%, #2e466e 100%);
+	background-color:#415989;
+}
+.theButton:active {
+	position:relative;
+	top:1px;
+}
+
+
 @media screen and (max-width: 700px) {
   .App{
     padding: 2%;
