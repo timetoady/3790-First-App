@@ -1060,7 +1060,7 @@
         },
         {
             "id": 105,
-            "name": "GameCube",
+            "name": "Nintendo GameCube",
             "slug": "gamecube",
             "games_count": 635,
             "image_background": "https://cdn.pixabay.com/photo/2017/04/04/18/06/video-game-console-2202554__340.jpg",
@@ -1156,7 +1156,7 @@
         },
         {
             "id": 24,
-            "name": "Game Boy Advance",
+            "name": "Nintendo Game Boy Advance",
             "slug": "game-boy-advance",
             "games_count": 910,
             "image_background": "https://cdn.pixabay.com/photo/2013/07/13/11/55/game-158949_960_720.png",
@@ -1204,7 +1204,7 @@
         },
         {
             "id": 43,
-            "name": "Game Boy Color",
+            "name": "Nintendo Game Boy Color",
             "slug": "game-boy-color",
             "games_count": 378,
             "image_background": "https://images.pexels.com/photos/2263815/pexels-photo-2263815.jpeg",
@@ -1252,7 +1252,7 @@
         },
         {
             "id": 26,
-            "name": "Game Boy",
+            "name": "Nintendo Game Boy",
             "slug": "game-boy",
             "games_count": 576,
             "image_background": "https://cdn.pixabay.com/photo/2013/07/12/16/28/gameboy-150950_960_720.png",
@@ -1300,7 +1300,7 @@
         },
         {
             "id": 79,
-            "name": "SNES",
+            "name": "Super Nintendo Entertainment System",
             "slug": "snes",
             "games_count": 832,
             "image_background": "https://cdn.pixabay.com/photo/2019/02/18/07/53/super-nintendo-entertainment-system-4003975_960_720.png",

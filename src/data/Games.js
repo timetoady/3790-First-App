@@ -5,18 +5,21 @@ import "../Games.css";
 const allGames = gamesData.results;
 
 function Games() {
-    const [searchTerm, setSearchTerm] = React.useState("");
-    const [searchResults, setSearchResults] = React.useState([]);
-    const handleChange = event => {
-       setSearchTerm(event.target.value);
-     };
-     React.useEffect(() => {
-        const results = allGames.filter(game =>
-          game.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          game.platforms[0].platform.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-        );
-        setSearchResults(results);
-      }, [searchTerm]);
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState([]);
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  React.useEffect(() => {
+    const results = allGames.filter(
+      (game) =>
+        game.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        game.platforms[0].platform.name
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
+  }, [searchTerm]);
 
   return (
     <div>
@@ -29,9 +32,17 @@ function Games() {
         onChange={handleChange}
       ></input>
       <div className="theGames">
+        {/* Here I will put my mapper for color and info */}
         {searchResults.map((result) => {
+          const classes = [];
+          let thePlatform = result.platforms[0].platform.name;
+          if (thePlatform.includes("Nintendo")) {
+            classes.push("nintendo");
+          } else if (thePlatform.includes("Sony")) {
+            classes.push("sony");
+          } else if (thePlatform.includes("Xbox")) classes.push("microsoft");
           return (
-            <div key={result.id}>
+            <div className={classes} key={result.id}>
               <h3>{result.name}</h3>
               <p>Rating: {result.rating}</p>
               <p>Number of ratings: {result.ratings_count}</p>
