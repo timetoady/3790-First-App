@@ -5,6 +5,7 @@ import "../Games.css";
 const allGames = gamesData.results;
 
 function Games() {
+  //Search bar state and handler
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchResults, setSearchResults] = React.useState([]);
   const handleChange = (event) => {
@@ -32,8 +33,11 @@ function Games() {
         onChange={handleChange}
       ></input>
       <div className="theGames">
-        {/* Here I will put my mapper for color and info */}
+        {/* Main data mapping to apply to DOM */}
         {searchResults.map((result) => {
+          {
+            /* Class-based assignment of div background based on company of platform */
+          }
           const classes = [];
           let thePlatform = result.platforms[0].platform.name;
           if (thePlatform.includes("Nintendo")) {
