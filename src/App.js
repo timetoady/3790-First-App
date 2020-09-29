@@ -4,7 +4,7 @@ import Platforms from "./data/Platforms";
 import Games from "./data/Games";
 import Games2 from "./Games2"
 
-console.log(process.env.REACT_APP_RAWG_GAMING_API_KEY)
+
 
 function App() {
   return (
