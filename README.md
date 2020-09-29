@@ -19,4 +19,13 @@ Don't want to scroll through all those games I like? Use the dynamically filteri
 ### A great selection of games!
 
 Not all of these are the best games there are, but they are all good, and have some meaning for me. Feel free to try any of them and tell me what you think.
+
+### Top games grid with nest Accordion 
+
+For those extra tags for each top game. 
+
+### Lazy load, color coded divs 
+
+Lazy load for the older components to save on initial space, and each game div is now color-coded to its platform of origin.
+
 :+1:
