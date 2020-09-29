@@ -1,6 +1,7 @@
 import React from "react";
 import gamesData from "./games.json";
 import "../Games.css";
+import LazyLoad from 'react-lazy-load';
 
 const allGames = gamesData.results;
 
@@ -24,7 +25,7 @@ function Games() {
 
   return (
     <div>
-      <h2>Very good games list ({allGames.length}): </h2>
+      <h2>My personal favorite games list ({allGames.length}): </h2>
       <input
         type="search"
         placeholder="Search games..."
@@ -46,6 +47,7 @@ function Games() {
             classes.push("sony");
           } else if (thePlatform.includes("Xbox")) classes.push("microsoft");
           return (
+            <LazyLoad>
             <div className={classes} key={result.id}>
               <h3>{result.name}</h3>
               <p>Rating: {result.rating}</p>
@@ -54,6 +56,7 @@ function Games() {
               <p>Release date: {result.released}</p>
               <img src={result.background_image} alt={result.name}></img>
             </div>
+            </LazyLoad>
           );
         })}
       </div>

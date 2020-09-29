@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import platformData from "./platforms.json";
+import LazyLoad from 'react-lazy-load';
 
 //Style for platform div
 const platStyle = {
@@ -46,8 +47,9 @@ class Platforms extends Component {
 
   render() {
     return (
+      <LazyLoad placeholderSrc="Tile Incoming">
       <div>
-        <h2>All listed platforms ({platformData.count}): </h2>
+        <h2>All currently listed platforms ({platformData.count}): </h2>
         <button className="theButton" onClick={this.gameNumSortHandler}>
           Sort by highest number of games:
         </button>
@@ -63,6 +65,7 @@ class Platforms extends Component {
           );
         })}
       </div>
+      </LazyLoad>
     );
   }
 }
