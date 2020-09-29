@@ -74,10 +74,6 @@ function Games() {
     getGames();
   });
 
-  const getAGame = (id) =>{
-
-  }
-
   //Do function that will change grid column number depeneding on screen width
   const columnAdjust = () => {
     if (window.innerWidth <= 500) {

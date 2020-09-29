@@ -36,9 +36,7 @@ function Games() {
       <div className="theGames">
         {/* Main data mapping to apply to DOM */}
         {searchResults.map((result) => {
-          {
             /* Class-based assignment of div background based on company of platform */
-          }
           const classes = [];
           let thePlatform = result.platforms[0].platform.name;
           if (thePlatform.includes("Nintendo")) {
