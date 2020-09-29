@@ -47,8 +47,8 @@ function Games() {
             classes.push("sony");
           } else if (thePlatform.includes("Xbox")) classes.push("microsoft");
           return (
-            <LazyLoad>
-            <div className={classes} key={result.id}>
+            <LazyLoad key={result.id}>
+            <div className={classes} >
               <h3>{result.name}</h3>
               <p>Rating: {result.rating}</p>
               <p>Number of ratings: {result.ratings_count}</p>
