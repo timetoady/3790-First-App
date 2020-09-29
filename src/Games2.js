@@ -61,7 +61,7 @@ function Games() {
       url: 'https://rawg-video-games-database.p.rapidapi.com/games',
       headers: {
         "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
-        "x-rapidapi-key": process.env.REACT_APP_WEATHER_API_KEY,
+        "x-rapidapi-key": process.env.REACT_APP_RAWG_GAMING_API_KEY,
       },
     }).then(function (response) {
       setGameData({
