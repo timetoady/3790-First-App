@@ -45,15 +45,15 @@ function Games() {
             classes.push("sony");
           } else if (thePlatform.includes("Xbox")) classes.push("microsoft");
           return (
-            <LazyLoad key={result.id}>
-            <div className={classes} >
+            <LazyLoad key={result.id} className={classes}>
+            <section>
               <h3>{result.name}</h3>
               <p>Rating: {result.rating}</p>
               <p>Number of ratings: {result.ratings_count}</p>
               <p>Platform: {result.platforms[0].platform.name}</p>
               <p>Release date: {result.released}</p>
               <img src={result.background_image} alt={result.name}></img>
-            </div>
+              </section>
             </LazyLoad>
           );
         })}

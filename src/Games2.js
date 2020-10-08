@@ -113,7 +113,7 @@ function Games() {
                 <AccordionDetails>
                   <Typography className = "brightText" >
                    {/* <p>
-                   Metacritic: {tile.metacritic}
+                   Description: {tile.description}
                      </p>  */}
                      
                      {tile.tags.map(tag => {

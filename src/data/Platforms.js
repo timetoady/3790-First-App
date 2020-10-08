@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import platformData from "./platforms.json";
-import LazyLoad from 'react-lazy-load';
+import LazyLoad from "react-lazy-load";
 
 //Style for platform div
 const platStyle = {
@@ -17,43 +17,52 @@ const boxStyle = {
   padding: ".3rem",
 };
 
+const allPlatforms = platformData.results;
+let theButton = document.querySelector(".theButton");
+
 //Platforms proper
-class Platforms extends Component {
-  state = {
-    allPlatforms: platformData.results,
+const Platforms = () => {
+  
+
+  const [platforms, setPlatforms] = useState([]);
+
+  const handleChange = () => {
+    setPlatforms(gameNumSortHandler(allPlatforms));
   };
 
-  gameNumSortHandler = () => {
-    const mostPlatforms = [...this.state.allPlatforms];
+  useEffect(() => {
+    const results = gameNumSortHandler(allPlatforms)
+    
+    setPlatforms(results)
+  }, [allPlatforms]);
+
+  const gameNumSortHandler = (platform) => {
+    const mostPlatforms = [...platform];
     const sortedPlats = mostPlatforms.sort(
       (a, b) => b.games_count - a.games_count
     );
-    let theButton = document.querySelector(".theButton");
-    if (this.state.allPlatforms[1].name !== "iOS") {
-      this.setState({
-        allPlatforms: sortedPlats,
-      });
-      theButton.textContent = "Sort by lowest number of games:";
+    const reSortedPlats = mostPlatforms.sort(
+      (b, a) => b.games_count - a.games_count
+    );
+    if (platform.name !== "iOS") {
+      
+      //theButton.textContent = "Sort by lowest number of games:";
+      return sortedPlats
     } else {
-      const reSortedPlats = mostPlatforms.sort(
-        (b, a) => b.games_count - a.games_count
-      );
-      this.setState({
-        allPlatforms: reSortedPlats,
-      });
-      theButton.textContent = "Sort by highest number of games:";
+      //theButton.textContent = "Sort by highest number of games:";
+      return reSortedPlats;
+      
     }
   };
 
-  render() {
-    return (
-      <LazyLoad placeholderSrc="Tile Incoming">
+  return (
+    <LazyLoad placeholderSrc="Tile Incoming">
       <div>
         <h2>All currently listed platforms ({platformData.count}): </h2>
-        <button className="theButton" onClick={this.gameNumSortHandler}>
+        <button className="theButton" onClick={handleChange}>
           Sort by highest number of games:
         </button>
-        {this.state.allPlatforms.map((result) => {
+        {platforms.map((result) => {
           return (
             <div style={platStyle} key={result.id}>
               <div style={boxStyle}>
@@ -65,9 +74,8 @@ class Platforms extends Component {
           );
         })}
       </div>
-      </LazyLoad>
-    );
-  }
-}
+    </LazyLoad>
+  );
+};
 
 export default Platforms;
