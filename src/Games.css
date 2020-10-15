@@ -134,7 +134,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a00e24b', e
 .lazyimg img{
   height: 27vh;
   right: 50% !important;
-
+  
 }
 
 @media screen and (max-width: 850px) {
