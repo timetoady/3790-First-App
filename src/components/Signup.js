@@ -21,6 +21,11 @@ import { makeStyles } from "@material-ui/core/styles";
 //   },
 // });
 
+//Need to do third field, show which are required.
+//Need to be able to validate login (probably with useContext, but maybe localStorage).  
+//Need to use useContext to pass info to Avatar which displays user name and image. 
+//Need to use useEffect for color changes instead of useState.
+
 const useStyles = makeStyles((theme) => ({
   root: {
     color: "#f2f2f2",
