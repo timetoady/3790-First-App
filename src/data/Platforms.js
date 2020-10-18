@@ -18,7 +18,7 @@ const boxStyle = {
 };
 
 const allPlatforms = platformData.results;
-let theButton = document.querySelector(".theButton");
+//let theButton = document.querySelector(".theButton");
 
 //Platforms proper
 const Platforms = () => {
@@ -34,7 +34,7 @@ const Platforms = () => {
     const results = gameNumSortHandler(allPlatforms)
     
     setPlatforms(results)
-  }, [allPlatforms]);
+  }, []);
 
   const gameNumSortHandler = (platform) => {
     const mostPlatforms = [...platform];

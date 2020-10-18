@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, Menu, MenuItem, Avatar } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
-import Modal from './Modal'
+import Dialog from './Dialog'
+import Signup from './Signup'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    backgroundColor: "#000000e8",
+    backgroundColor: "#000077e8",
     "&:hover": {
       background: "#f00",
     },
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   menuItem: {
     backgroundColor: "#000",
     "&:hover": {
-      background: "#00E",
+      background: "#000077",
     },
   },
 }));
@@ -33,14 +34,20 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleMenu() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const handleDialogToggle = () => {
+    setDialogOpen(!dialogOpen)
+    handleMenuClose()
+  }
 
   return (
     <div>
@@ -60,23 +67,23 @@ export default function SimpleMenu() {
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            onClose={handleMenuClose}
           >
             {/* Here, have to have menu item handle open of modal */}
-            <MenuItem className={classes.menuItem} onClick={handleClose}>
-              Login
+            <MenuItem className={classes.menuItem} onClick={handleDialogToggle}>
+            <Dialog></Dialog>
             </MenuItem>
-            <MenuItem className={classes.menuItem} onClick={handleClose}>
-              My account
+            <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
+              <Signup></Signup>
             </MenuItem>
-            <MenuItem className={classes.menuItem} onClick={handleClose}>
+            <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
               Logout
             </MenuItem>
           </Menu>
      
         <Avatar></Avatar>
       </div>
-      <Modal></Modal>
+      
     </div>
   );
 }
