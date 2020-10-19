@@ -10,21 +10,14 @@ import {
   Typography,
 } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
-// stuff;
-// const theme = createMuiTheme({
-//   palette: {
-//     overrides: {
-//       container: {
-//         backgroundColor: "#000",
-//       },
-//     },
-//   },
-// });
 
 //Need to do third field, show which are required.
-//Need to be able to validate login (probably with useContext, but maybe localStorage).  
-//Need to use useContext to pass info to Avatar which displays user name and image. 
+//Need to be able to validate login (probably with useContext, but maybe localStorage).
+//Need to use useContext to pass info to Avatar which displays user name and image.
 //Need to use useEffect for color changes instead of useState.
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,17 +27,22 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     padding: "0 4rem 0 0",
     width: "100%",
+    textDecoration: "none",
+    color: "#f2f2f2",
   },
   error: {
     fontWeight: 500,
     color: "red !important",
   },
   disabled: {
-    color: "gray !important",
+    color: "#eee !important",
   },
   enabled: {
     color: "#f2f2f2",
   },
+  formLable: {
+    color: "rgba(205, 205, 205, 0.54)",
+  }
 }));
 
 export default function FormDialog() {
@@ -62,9 +60,9 @@ export default function FormDialog() {
     "Please provide an username and password. (Password must be at least 8 characters.)"
   );
   //style for instruction message
-  const [messageClass, setMessageClass] = useState("classes.root");
+  const [messageClass, setMessageClass] = useState("");
   //style for Confirm button, depending on if it's disabled
-  const [disableCheck, setDisabledStyle] = useState("classes.disabled");
+  const [disableCheck, setDisabledStyle] = useState("");
 
   const handleOpenState = () => {
     setOpen(!open);
@@ -75,49 +73,52 @@ export default function FormDialog() {
   };
 
   const handelConfirmState = (state) => {
-      setConfirmState(state)
-  }
+    setConfirmState(state);
+  };
 
   const handleDuplicateState = (state) => {
-      console.log(`handleDuplicateState says state is ${state}`)
-      state === false ? setIsDuplicate(false) : setIsDuplicate(true)
-  }
+    console.log(`handleDuplicateState says state is ${state}`);
+    state === false ? setIsDuplicate(false) : setIsDuplicate(true);
+  };
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
   };
 
   const handleMessageClass = (className) => {
+    console.log(`handleMessageClass says className is ${className}`)
     setMessageClass(className);
+
   };
 
-  const handleDisabledConfirm = (state) =>{
-      state === true ? setDisabledStyle('classes.enabled') : setDisabledStyle('classes.disabled')
-
-  }
+  const handleDisabledConfirm = (state) => {
+    console.log(`Disabled state is set to ${state}`)
+    state === true
+      ? setDisabledStyle("classes.enabled")
+      : setDisabledStyle("classes.disabled");
+  };
 
   //confirms password is same in both fields, and other checks
   const confirmPassword = (event) => {
     console.log("Confirm password fired");
     let confirmation = event.target.value;
     console.log(`Checking if ${confirmation} is = ${password}...`);
-    if (
-      confirmation === password &&
-      password.length >= 8
-    ) {if (isDuplicate === false) {
+    if (confirmation === password && password.length >= 8) {
+      if (isDuplicate === false) {
         handelConfirmState(false);
+        resetStateMessage();
+        handleDisabledConfirm(true);
         handleMessageClass("classes.root");
-        resetStateMessage()
-        handleDisabledConfirm(true)
-    } else {
+      } else {
         handelConfirmState(true);
-        setStateMessage("Username not validated. Please put in a valid username.")
+        setStateMessage(
+          "Username not validated. Please put in a valid username."
+        );
         handleMessageClass("classes.error");
-    }
-
+      }
     } else {
       setConfirmState(true);
-      setStateMessage("Invalid password provided. Please try again.")
+      setStateMessage("Invalid password provided. Please try again.");
       handleMessageClass("classes.error");
     }
   };
@@ -142,28 +143,38 @@ export default function FormDialog() {
   //button to work
   const checkDuplicates = (event) => {
     let newUser = event.target.value;
-    console.log(`Checking if ${newUser} is in Storage...`);
+    console.log(`Checking if ${newUser} is valid...`);
     let local = getAllStorageInfo();
     let check = true;
     if (userName !== null && userName !== "" && userName !== " ") {
-        local.forEach((user) => {
-            if (user.username === newUser) check = false
-        })
-        if (check === false) {
-            setIsDuplicate(true);
-            setStateMessage(`Duplicate username detected. User ${newUser} already exists.`);
-            console.log(`Duplicate username detected. User ${newUser} already exists.`)
-            setMessageClass('classes.error')
-        } else {
-            setIsDuplicate(false);
-            setMessageClass('classes.root')
-            console.log(`${newUser} not found in localStorage. Good to go!`);
-            handleDuplicateState(false)
-            handleDisabledConfirm(true)
-        }
+      console.log(`Check duplicates says username is ${userName}`)
+      console.log(`Checking if ${newUser} is in Storage...`);
+      local.forEach((user) => {
+        if (user.username === newUser) check = false;
+      });
+      if (check === false) {
+        setIsDuplicate(true);
+        setStateMessage(
+          `Duplicate username detected. User ${newUser} already exists.`
+        );
+        handleMessageClass("classes.error");
+        console.log(
+          `Duplicate username detected. User ${newUser} already exists.`
+        );
+        
+      } else {
+        setIsDuplicate(false);
+        handleMessageClass("classes.root");
+        console.log(`${newUser} not found in localStorage. Good to go!`);
+        handleDuplicateState(false);
+        handleDisabledConfirm(true);
+      }
     } else {
-        setStateMessage("Null or empty username provided. Please provide a username.");
-        setMessageClass('classes.error')
+      console.log(`Detected as null, empty, or one space.`);
+      setStateMessage(
+        "Null or empty username provided. Please provide a username."
+      );
+      handleMessageClass("classes.error");
     }
   };
 
@@ -182,7 +193,10 @@ export default function FormDialog() {
     setStateMessage(
       "Please provide an username and password. (Password must be at least 8 characters.)"
     );
+    handleMessageClass("classes.root")
   };
+
+
 
   return (
     <div>
@@ -201,8 +215,10 @@ export default function FormDialog() {
       >
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
         <DialogContent>
-          <DialogContentText className={messageClass}>{stateMessage}</DialogContentText>
-          <TextField
+          <DialogContentText className={messageClass}>
+            {stateMessage}
+          </DialogContentText>
+          <TextField 
             autoFocus
             margin="dense"
             id="username"
@@ -210,6 +226,7 @@ export default function FormDialog() {
             type="text"
             fullWidth
             value={userName}
+            required
             onChange={handleUserName}
             onFocus={resetStateMessage}
             onBlur={checkDuplicates}
@@ -219,6 +236,7 @@ export default function FormDialog() {
             id="password"
             label="Password"
             type="password"
+            required
             fullWidth
             value={password}
             onChange={handlePassword}
@@ -228,9 +246,17 @@ export default function FormDialog() {
             id="confirmPass"
             label="Confirm Password"
             type="password"
+            required
             fullWidth
             onFocus={resetStateMessage}
             onBlur={confirmPassword}
+          />
+          <TextField
+            margin="dense"
+            id="picURL"
+            label="Avatar Photo URL"
+            type="url"
+            fullWidth
           />
         </DialogContent>
         <DialogActions>

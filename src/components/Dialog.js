@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     border: "none",
     padding: "0 4rem 0 0",
-
+    color: "#f2f2f2",
     width: "100%",
   },
 }));

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       background: "#f00",
     },
+    color: "#f2f2f2",
   },
   menu: {
     backgroundColor: "000000c8",
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       background: "#000077",
     },
+    color: "#f2f2f2"
   },
 }));
 
