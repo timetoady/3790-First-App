@@ -21,11 +21,9 @@ const useStyles = makeStyles((theme) => ({
     color: "#f2f2f2",
   },
   menu: {
-    backgroundColor: "000000c8",
-    paddingTop: 0,
+    
   },
   menuItem: {
-    backgroundColor: "#000",
     "&:hover": {
       background: "#000077",
     },
@@ -73,7 +71,7 @@ export default function SimpleMenu() {
           >
             {/* Here, have to have menu item handle open of modal */}
             <MenuItem className={classes.menuItem} onClick={handleDialogToggle}>
-            <Dialog></Dialog>
+            <Dialog open={dialogOpen} onClose={handleDialogToggle}></Dialog>
             </MenuItem>
             <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
               <Signup></Signup>

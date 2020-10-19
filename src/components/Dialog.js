@@ -33,9 +33,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormDialog() {
+export default function FormDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  //const { open, onClose } = props
 
   const handleClickOpen = () => {
     setOpen(true);

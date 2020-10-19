@@ -98,7 +98,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a00e24b', e
     
   } 
 
-  .MuiPaper-root {
+  .MuiAccordion-root {
     margin: .2rem;
     background-color: rgba(0, 0, 0, 0.1) !important;
     position: relative;
@@ -148,23 +148,34 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a00e24b', e
 
 
 .MuiDialog-paper div{
-  background-color: #111111;
-  color: white;
+  
+
   max-width: 50vw;
 }
 
-.MuiDialog-paper p{
+/* .MuiDialog-paper p{
   color: #f2f2f2;
-}
+} */
 
-.MuiTextField-root{
+/* .MuiTextField-root{
   border-bottom: #f2f2f2 1px solid !important;
-  background-color: white;
+
+} */
+
+/* .MuiDialogContent-root{
+  background-color: #000000d0;
 }
 
-.MuiTextField-root::placeholder{
-  font-weight: 600;
-  color: red;
+.MuiInputLabel-root{
+  color: white !important;
+} */
+
+/* .MuiDialog-paper{
+  background-color: #f2f2f2 !important;
+} */
+
+.MuiPopover-paper {
+  background-color: rgba(0, 0, 0, 0.89) !important;
 }
 
 @media screen and (max-width: 850px) {

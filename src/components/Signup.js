@@ -22,6 +22,9 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     color: "#f2f2f2",
+    '&::placeholder': {
+      textOverflow: 'ellipsis !important',
+    }
   },
   button: {
     border: "none",
@@ -29,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     textDecoration: "none",
     color: "#f2f2f2",
+    
   },
   error: {
     fontWeight: 500,
@@ -222,6 +226,7 @@ export default function FormDialog() {
             autoFocus
             margin="dense"
             id="username"
+            name="username"
             label="User Name"
             type="text"
             fullWidth
@@ -234,6 +239,7 @@ export default function FormDialog() {
           <TextField
             margin="dense"
             id="password"
+            name="password"
             label="Password"
             type="password"
             required
@@ -244,6 +250,7 @@ export default function FormDialog() {
           <TextField
             margin="dense"
             id="confirmPass"
+            name="confirmPass"
             label="Confirm Password"
             type="password"
             required
@@ -254,6 +261,7 @@ export default function FormDialog() {
           <TextField
             margin="dense"
             id="picURL"
+            name="picURL"
             label="Avatar Photo URL"
             type="url"
             fullWidth
