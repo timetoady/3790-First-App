@@ -10,6 +10,9 @@ import {
   Typography,
 } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
 // stuff;
 // const theme = createMuiTheme({
 //   palette: {
@@ -62,34 +65,81 @@ export default function FormDialog(props) {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Login</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please enter your login information below.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="email"
-            label="Email Address"
-            type="email"
-            fullWidth
-          />
-          <TextField
-            margin="dense"
-            id="password"
-            label="Password"
-            type="password"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
+        <Formik
+          initialValues={{ email: "you@email.com", password: "" }}
+          validationSchema={Yup.object().shape({
+            email: Yup.string()
+              .email("Invalid email provided.")
+              .max(30)
+              .required("Must have email to login."),
+            password: Yup.string()
+              .min(8)
+              .max(30)
+              .required("Please add your password to login."),
+          })}
+          onSubmit={async (values, { setErrors, setStatus, setSubmitting}) => {
+            try {
+              console.log(values.email, values.password)
+            } catch (error) {
+              console.error(error)
+            }
+          }}
+        >{({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          /* and other goodies */
+        }) => (
+          <form noValidate autoComplete="off">
+            <DialogContent>
+              <DialogContentText>
+                Please enter your login information below.
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="email"
+                name="email"
+                label="Email Address"
+                type="email"
+                fullWidth
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+                error={Boolean(touched.email && errors.email)}
+                helperText={touched.email && errors.email}
+                required
+              />
+              <TextField
+                margin="dense"
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                fullWidth
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+                error={Boolean(touched.password && errors.password)}
+                helperText={touched.password && errors.password}
+                required
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                Confirm
+              </Button>
+            </DialogActions>
+          </form>
+          )}
+        </Formik>
       </Dialog>
     </div>
   );
