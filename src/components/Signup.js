@@ -62,7 +62,7 @@ export default function FormDialog() {
   //   "Please provide an username and password. (Password must be at least 8 characters.)"
   // );
   //style for instruction message
-  const [messageClass, setMessageClass] = useState("");
+  // const [messageClass, setMessageClass] = useState("");
   //style for Confirm button, depending on if it's disabled
   //const [disableCheck, setDisabledStyle] = useState("");
 
@@ -255,7 +255,7 @@ export default function FormDialog() {
           }) => (
             <form noValidate autoComplete="off">
               <DialogContent>
-                <DialogContentText className={messageClass}>
+                <DialogContentText >
                   Please confirm your username and password. You can also add an image URL if you like.
                 </DialogContentText>
                 <TextField
