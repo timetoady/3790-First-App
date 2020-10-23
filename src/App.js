@@ -4,7 +4,7 @@ import Platforms from "./data/Platforms";
 import Games from "./data/Games";
 import Games2 from "./components/Games2"
 import SimpleMenu from "./components/ui"
-import AuthContextProvider from './contexts/AuthContext'
+//import AuthContextProvider from './contexts/AuthContext'
 
 
 //need to add routes to this as the basic layout, and then a user layout
@@ -12,7 +12,7 @@ import AuthContextProvider from './contexts/AuthContext'
 function App() {
   return (
     <div className="App">
-      <AuthContextProvider>
+      
       <SimpleMenu></SimpleMenu>
       <section className="DefaultHome">
       <h1>Platforms and Games</h1>
@@ -32,8 +32,8 @@ function App() {
         
       </div>
       </section>
-      {/* here we would put he route to user */}
-      </AuthContextProvider>
+      {/* here we would put the route to user */}
+      
     </div>
   );
 }

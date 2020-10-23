@@ -320,6 +320,7 @@ export default function FormDialog() {
                   //disabled={confirmState}
                   //onClick={setToStorage}
                   color="primary"
+                  disabled={errors.passwordConfirm || errors.password || errors.email}
                 >
                   Confirm
                 </Button>

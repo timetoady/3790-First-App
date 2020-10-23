@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   TextField,
@@ -12,6 +12,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { AuthContext } from "../contexts/AuthContext";
 
 // stuff;
 // const theme = createMuiTheme({
@@ -40,6 +41,22 @@ export default function FormDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   //const { open, onClose } = props
+  const authContext = useContext(AuthContext);
+
+  const handleLoginState = () => {
+    console.log(`Auth state is ${authContext.isAuth}`)
+    if (authContext.isAuth) {
+      authContext.logout();
+      handleClose();
+      return;
+    }
+    if (!authContext.isAuth) {
+      handleClickOpen();
+      if (open) {
+        authContext.login();
+      }
+    }
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,13 +68,23 @@ export default function FormDialog(props) {
 
   return (
     <div>
-      <Typography
-        className={classes.button}
-        color="primary"
-        onClick={handleClickOpen}
-      >
-        Login
-      </Typography>
+      {authContext.isAuth ? 
+        <Typography
+          className={classes.button}
+          color="primary"
+          onClick={handleLoginState}
+        >
+          Logout
+        </Typography>
+       : 
+        <Typography
+          className={classes.button}
+          color="primary"
+          onClick={handleLoginState}
+        >
+          Login
+        </Typography>
+      }
       <Dialog
         className={classes.root}
         open={open}
@@ -77,67 +104,75 @@ export default function FormDialog(props) {
               .max(30)
               .required("Please add your password to login."),
           })}
-          onSubmit={async (values, { setErrors, setStatus, setSubmitting}) => {
+          onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
             try {
-              console.log(values.email, values.password)
+              console.log(values.email, values.password);
+              authContext.login();
+              handleClose();
             } catch (error) {
-              console.error(error)
+              console.error(error);
             }
           }}
-        >{({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
-          <form noValidate onSubmit={handleSubmit} autoComplete="off">
-            <DialogContent>
-              <DialogContentText>
-                Please enter your login information below.
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="email"
-                name="email"
-                label="Email Address"
-                type="email"
-                fullWidth
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-                error={Boolean(touched.email && errors.email)}
-                helperText={touched.email && errors.email}
-                required
-              />
-              <TextField
-                margin="dense"
-                id="password"
-                name="password"
-                label="Password"
-                type="password"
-                fullWidth
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-                error={Boolean(touched.password && errors.password)}
-                helperText={touched.password && errors.password}
-                required
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Cancel
-              </Button>
-              <Button type="submit" disabled={Boolean(errors.email || errors.password)} color="primary">
-                Confirm
-              </Button>
-            </DialogActions>
-          </form>
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+            /* and other goodies */
+          }) => (
+            <form noValidate onSubmit={handleSubmit} autoComplete="off">
+              <DialogContent>
+                <DialogContentText>
+                  Please enter your login information below.
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="email"
+                  name="email"
+                  label="Email Address"
+                  type="email"
+                  fullWidth
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  error={Boolean(touched.email && errors.email)}
+                  helperText={touched.email && errors.email}
+                  required
+                />
+                <TextField
+                  margin="dense"
+                  id="password"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  fullWidth
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  error={Boolean(touched.password && errors.password)}
+                  helperText={touched.password && errors.password}
+                  required
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={Boolean(errors.email || errors.password)}
+                  color="primary"
+                  //onClick={}
+                >
+                  Confirm
+                </Button>
+              </DialogActions>
+            </form>
           )}
         </Formik>
       </Dialog>

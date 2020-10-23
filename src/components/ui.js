@@ -77,7 +77,7 @@ export default function SimpleMenu() {
               <Signup></Signup>
             </MenuItem>
             <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
-              Logout
+              About
             </MenuItem>
           </Menu>
      
