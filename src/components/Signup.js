@@ -253,7 +253,7 @@ export default function FormDialog() {
             isSubmitting,
             /* and other goodies */
           }) => (
-            <form noValidate autoComplete="off">
+            <form noValidate onSubmit={handleSubmit} autoComplete="off">
               <DialogContent>
                 <DialogContentText >
                   Please confirm your username and password. You can also add an image URL if you like.

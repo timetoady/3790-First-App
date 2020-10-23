@@ -94,7 +94,7 @@ export default function FormDialog(props) {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form noValidate autoComplete="off">
+          <form noValidate onSubmit={handleSubmit} autoComplete="off">
             <DialogContent>
               <DialogContentText>
                 Please enter your login information below.
@@ -133,7 +133,7 @@ export default function FormDialog(props) {
               <Button onClick={handleClose} color="primary">
                 Cancel
               </Button>
-              <Button onClick={handleClose} color="primary">
+              <Button type="submit" disabled={Boolean(errors.email || errors.password)} color="primary">
                 Confirm
               </Button>
             </DialogActions>
