@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../contexts/AuthContext";
+import { Redirect } from 'react-router-dom'
 
 // stuff;
 // const theme = createMuiTheme({
@@ -48,6 +49,7 @@ export default function FormDialog(props) {
     if (authContext.isAuth) {
       authContext.logout();
       handleClose();
+      
       return;
     }
     if (!authContext.isAuth) {
@@ -58,6 +60,8 @@ export default function FormDialog(props) {
     }
   };
 
+
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -65,9 +69,13 @@ export default function FormDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
+  
+    let redirect = null
+    authContext.isAuth ? redirect = <Redirect to="/user"/> : redirect = <Redirect to="/"/>
+  
   return (
     <div>
+      {redirect}
       {authContext.isAuth ? 
         <Typography
           className={classes.button}

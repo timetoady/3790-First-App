@@ -10,6 +10,7 @@ import "../App.css";
 function User() {
   return (
     <div className="App">
+      
 {/* here, just have welcome, search bar, and then grid element below for games to appear in once they've clicked it */}
     </div>
   );
