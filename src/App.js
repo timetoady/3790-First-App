@@ -5,6 +5,8 @@ import Games from "./data/Games";
 import Games2 from "./components/Games2"
 import SimpleMenu from "./components/ui"
 //import AuthContextProvider from './contexts/AuthContext'
+import { Route, Switch } from 'react-router-dom'
+import User from "./routes/user";
 
 
 //need to add routes to this as the basic layout, and then a user layout
@@ -12,16 +14,15 @@ import SimpleMenu from "./components/ui"
 function App() {
   return (
     <div className="App">
-      
+      {/* here add context based on login info, turn user path to user email */}
       <SimpleMenu></SimpleMenu>
+      <Switch>
+    <Route path='/user' component={User}/>
+    <Route path='/' component={Games2}/>
+      </Switch>
       <section className="DefaultHome">
       <h1>Platforms and Games</h1>
-      <div>
-      <Games2/>
-    </div>
       <div className="itemDisp">
-
-
         <div>
           <Platforms />
         </div>

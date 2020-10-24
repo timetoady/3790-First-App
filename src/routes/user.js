@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "../App.css";
 
 
 //Here, we'll render a UserGames component, where they can search for an add 
