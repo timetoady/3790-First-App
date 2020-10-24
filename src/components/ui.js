@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { Button, Menu, MenuItem, Avatar } from "@material-ui/core/";
+import React, { useState, useContext } from "react";
+import { Button, Menu, MenuItem, Avatar, Typography } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
-import Dialog from './Dialog'
-import Signup from './Signup'
+import Dialog from "./Dialog";
+import Signup from "./Signup";
+import { AuthContext } from "../contexts/AuthContext";
+import { LoginContextProvider, LoginContext } from "../contexts/LoginContext";
 
+//Here, import LoginContext
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,14 +23,12 @@ const useStyles = makeStyles((theme) => ({
     },
     color: "#f2f2f2",
   },
-  menu: {
-    
-  },
+  menu: {},
   menuItem: {
     "&:hover": {
       background: "#000077",
     },
-    color: "#f2f2f2"
+    color: "#f2f2f2",
   },
 }));
 
@@ -35,6 +36,7 @@ export default function SimpleMenu() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  //const [loginGreeting, setLoginGreeting] = useState("");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,24 +47,26 @@ export default function SimpleMenu() {
   };
 
   const handleDialogToggle = () => {
-    setDialogOpen(!dialogOpen)
-    handleMenuClose()
-  }
-
+    setDialogOpen(!dialogOpen);
+    handleMenuClose();
+  };
+const authContext = useContext(AuthContext)
   return (
     <div>
-      <div className={classes.root}>
-        <Button
-          className={classes.button}
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          Menu
-        </Button>
-       
+      <LoginContextProvider>
+        
+        <div className={classes.root}>
+          <Button
+            className={classes.button}
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            Menu
+          </Button>
+
           <Menu
-          className={classes.menu}
+            className={classes.menu}
             id="simple-menu"
             anchorEl={anchorEl}
             keepMounted
@@ -71,7 +75,7 @@ export default function SimpleMenu() {
           >
             {/* Here, have to have menu item handle open of modal */}
             <MenuItem className={classes.menuItem} onClick={handleDialogToggle}>
-            <Dialog open={dialogOpen} onClose={handleDialogToggle}></Dialog>
+              <Dialog open={dialogOpen} onClose={handleDialogToggle}></Dialog>
             </MenuItem>
             <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
               <Signup></Signup>
@@ -80,10 +84,19 @@ export default function SimpleMenu() {
               About
             </MenuItem>
           </Menu>
-     
-        <Avatar></Avatar>
-      </div>
-      
+          {console.log(authContext.isAuth)},
+          <div className={classes.root}>
+            {authContext.isAuth ? (
+            <Typography>Welcome Back {LoginContext.email}!</Typography>
+            ) : (
+             
+              <Typography>Welcome, visitor!</Typography>
+            )}
+
+            <Avatar></Avatar>
+          </div>
+        </div>
+      </LoginContextProvider>
     </div>
   );
 }

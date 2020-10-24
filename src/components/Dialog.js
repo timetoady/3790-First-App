@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, createContext } from "react";
 import {
   Button,
   TextField,
@@ -26,6 +26,11 @@ import { Redirect } from 'react-router-dom'
 //   },
 // });
 
+export let LoginContext = createContext({
+  email: "",
+  
+})
+
 const useStyles = makeStyles((theme) => ({
   root: {
     color: "#f2f2f2",
@@ -41,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export default function FormDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [loggedEmail, setLoggedEmail] = useState("")
   //const { open, onClose } = props
   const authContext = useContext(AuthContext);
 
@@ -60,6 +66,10 @@ export default function FormDialog(props) {
     }
   };
 
+  const handleLoginInfo = (email) => {
+    setLoggedEmail(email)
+    return email
+  }
 
 
   const handleClickOpen = () => {
@@ -115,6 +125,7 @@ export default function FormDialog(props) {
           onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
             try {
               console.log(values.email, values.password);
+              handleLoginInfo(values.email)
               authContext.login();
               handleClose();
             } catch (error) {
