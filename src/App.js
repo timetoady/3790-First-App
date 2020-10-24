@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
-import Platforms from "./data/Platforms";
-import Games from "./data/Games";
+// import Platforms from "./data/Platforms";
+// import Games from "./data/Games";
 import Games2 from "./components/Games2"
 import SimpleMenu from "./components/ui"
 //import AuthContextProvider from './contexts/AuthContext'
@@ -21,14 +21,14 @@ function App() {
     <Route path='/' component={Games2}/>
       </Switch>
       <section className="DefaultHome">
-      <h1>Platforms and Games</h1>
+
       <div className="itemDisp">
         <div>
-          <Platforms />
+          {/* <Platforms /> */}
         </div>
 
         <div>
-          <Games />
+          {/* <Games /> */}
         </div>
         
       </div>

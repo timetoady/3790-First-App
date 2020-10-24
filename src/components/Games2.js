@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../Games.css";
+import "../App.css";
+import Platforms from "../data/Platforms";
+import Games from "../data/Games";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   GridList,
@@ -49,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //Main export functions
-function Games() {
+function Games2() {
   const classes = useStyles();
   const [gameData, setGameData] = useState({
     games: [],
@@ -137,8 +140,20 @@ function Games() {
         ))}
       </GridList>
     </div>
+    <h1>Platforms and Games</h1>
+      <div className="itemDisp">
+        <div>
+          <Platforms />
+        </div>
+
+        <div>
+          <Games />
+        </div>
+        
+      </div>
+
     </div>
   );
 }
 
-export default Games;
+export default Games2;
