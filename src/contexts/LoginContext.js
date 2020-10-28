@@ -17,7 +17,8 @@ export const LoginContextProvider = (props) => {
 
     return (
         <LoginContext.Provider value={{
-            email: emailHandler,
+            email: email,
+            setEmail: emailHandler,
         }}
         >
             {props.children}

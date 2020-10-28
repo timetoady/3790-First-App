@@ -46,9 +46,11 @@ const useStyles = makeStyles((theme) => ({
 export default function FormDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [loggedEmail, setLoggedEmail] = useState("")
+  //const [loggedEmail, setLoggedEmail] = useState("")
   //const { open, onClose } = props
   const authContext = useContext(AuthContext);
+
+  
 
   const handleLoginState = () => {
     console.log(`Auth state is ${authContext.isAuth}`)
@@ -66,10 +68,10 @@ export default function FormDialog(props) {
     }
   };
 
-  const handleLoginInfo = (email) => {
-    setLoggedEmail(email)
-    return email
-  }
+  // const handleLoginInfo = (email) => {
+  //   setLoggedEmail(email)
+  //   return email
+  // }
 
 
   const handleClickOpen = () => {
@@ -125,7 +127,7 @@ export default function FormDialog(props) {
           onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
             try {
               console.log(values.email, values.password);
-              handleLoginInfo(values.email)
+              //handleLoginInfo(values.email)
               authContext.login();
               handleClose();
             } catch (error) {

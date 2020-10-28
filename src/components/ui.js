@@ -84,7 +84,7 @@ const authContext = useContext(AuthContext)
               About
             </MenuItem>
           </Menu>
-          {console.log(authContext.isAuth)},
+          {console.log(`Auth state: ${authContext.isAuth}`)},
           <div className={classes.root}>
             {authContext.isAuth ? (
             <Typography>Welcome Back {LoginContext.email}!</Typography>

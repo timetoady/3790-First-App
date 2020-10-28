@@ -6,7 +6,7 @@ const GameContext = createContext({
 })
 
 export const GameContextProvider = (props) =>{
-const [gameData, setGameData] = useState([])
+const [gameData, setGameData] = useState({})
 
 
 useEffect(()=> {
@@ -27,9 +27,11 @@ useEffect(()=> {
 })
 
 return (
-    <APIcontext.Provider value= {
-        {gameData}
-    }
+  <APIcontext.Provider value= {
+      {gameData}
+  }>
+  {props.children}
+  </APIcontext.Provider>
 )
 
 
