@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../contexts/AuthContext";
-import { Redirect } from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 
 // stuff;
 // const theme = createMuiTheme({
@@ -28,8 +28,7 @@ import { Redirect } from 'react-router-dom'
 
 export let LoginContext = createContext({
   email: "",
-  
-})
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,14 +49,12 @@ export default function FormDialog(props) {
   //const { open, onClose } = props
   const authContext = useContext(AuthContext);
 
-  
-
   const handleLoginState = () => {
-    console.log(`Auth state is ${authContext.isAuth}`)
+    console.log(`Auth state is ${authContext.isAuth}`);
     if (authContext.isAuth) {
       authContext.logout();
       handleClose();
-      
+
       return;
     }
     if (!authContext.isAuth) {
@@ -73,7 +70,6 @@ export default function FormDialog(props) {
   //   return email
   // }
 
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -81,14 +77,16 @@ export default function FormDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  
-    let redirect = null
-    authContext.isAuth ? redirect = <Redirect to="/user"/> : redirect = <Redirect to="/"/>
-  
+
+  let redirect = null;
+  authContext.isAuth
+    ? (redirect = <Redirect to="/user" />)
+    : (redirect = <Redirect to="/" />);
+
   return (
     <div>
       {redirect}
-      {authContext.isAuth ? 
+      {authContext.isAuth ? (
         <Typography
           className={classes.button}
           color="primary"
@@ -96,7 +94,7 @@ export default function FormDialog(props) {
         >
           Logout
         </Typography>
-       : 
+      ) : (
         <Typography
           className={classes.button}
           color="primary"
@@ -104,7 +102,7 @@ export default function FormDialog(props) {
         >
           Login
         </Typography>
-      }
+      )}
       <Dialog
         className={classes.root}
         open={open}
