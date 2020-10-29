@@ -4,11 +4,18 @@ Just a little app displaying select video game platforms and games.
 
 ## Features
 
-### Class and Functional Components
+### All Functional Components, All the Time
 
-Importing components using both class and function to display on the DOM from games.json and platform.json files, respectively. 
+All components functional and act on state using useState hooks.  
 
-### Sort button
+### Signup and Login Forms
+
+Both [Signup](https://github.com/timetoady/3790-First-App/blob/master/src/components/Signup.js) and [Login](https://github.com/timetoady/3790-First-App/blob/master/src/components/Dialog.js) forms created, with full validation and required elements marked. Signup takes email, password, password confirmation, and URL. Both use [AuthContext](https://github.com/timetoady/3790-First-App/blob/master/src/contexts/AuthContext.js) to store a local authorized state. (An API context is still in the works!)
+
+### Component side effects
+
+Submission of either Signup or Login causes a login state to mark as authorized, reroutes the user to the [User](https://github.com/timetoady/3790-First-App/blob/master/src/routes/user.js) page, and changes the Menu's Login and Signup buttons to Logout (which triggers logout) and Home.
+<!-- ### Sort button
 
 Sorts platforms back and forth between most and least games for that platform using sort.
 
@@ -28,4 +35,4 @@ For those extra tags for each top game.
 
 Lazy load for the older components to save on initial space, and each game div is now color-coded to its platform of origin.
 
-:+1:
+:+1: -->
