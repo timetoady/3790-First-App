@@ -1,18 +1,16 @@
 import React, { useContext } from "react";
 import "../App.css";
+import { InputBase } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
 import { AuthContext } from "../contexts/AuthContext";
-import { Route, Switch, Redirect } from "react-router-dom";
-import Games2 from "../components/Games2"
-import { Collection } from "../routes/collection";
-import { Wishlist } from "../routes/wishlist";
+//import { Redirect } from 'react-router-dom'
 
 //Here, we'll render a UserGames component, where they can search for an add
 //games to their list. Ideally, it will query rapidapi, allow them to select a game,
 //and import it by scooping up the JSON data to store locally/on a database,
 //so it doesnt' have to call the API for individual games 30 times.
 
-//Two routes: collection and wish list that they can add things to.
 console.log(`user says auth state is ${AuthContext.isAuth}`);
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,20 +68,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function User() {
-  //const classes = useStyles();
-  const authContext = useContext(AuthContext);
+export default function Collection() {
+  const classes = useStyles();
+  //const authContext = useContext(AuthContext);
 
-  return authContext.isAuth ? (
+  return (
     <div>
-      <Switch>
-        <Route path="/" component={Collection} />
-        <Route path="/wishlist" component={Wishlist} />
-      </Switch>
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase
+          placeholder="Search…"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ "aria-label": "search" }}
+        />
+      </div>
+      <h2>Collection</h2>
     </div>
-  ) : (
-    <Redirect to="/">
-      {console.log(`User says auth state is ${AuthContext.isAuth}`)}
-    </Redirect>
   );
 }
+

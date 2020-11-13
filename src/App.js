@@ -1,15 +1,10 @@
 import React from "react";
 import "./App.css";
-// import Platforms from "./data/Platforms";
-// import Games from "./data/Games";
 import Games2 from "./components/Games2"
 import SimpleMenu from "./components/ui"
-//import AuthContextProvider from './contexts/AuthContext'
 import { Route, Switch } from 'react-router-dom'
 import User from "./routes/user";
 
-
-//need to add routes to this as the basic layout, and then a user layout
 
 function App() {
   return (
