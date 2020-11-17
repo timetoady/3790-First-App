@@ -20,6 +20,19 @@ p{
     padding: .3rem;
 }
 
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.MuiAppBar-colorPrimary{
+  background-color: #000077e8 !important;
+}
+
+
+.MuiPaper-root{
+  background-color: none !important;
+}
 
 .nintendo {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ff1a00+6,ff1a00+98&0.1+14,0.66+69,1+97 */

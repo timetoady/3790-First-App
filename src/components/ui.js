@@ -5,6 +5,7 @@ import Dialog from "./Dialog";
 import Signup from "./Signup";
 import { AuthContext } from "../contexts/AuthContext";
 import { LoginContextProvider, LoginContext } from "../contexts/LoginContext";
+import { Link } from "react-router-dom";
 
 //Here, import LoginContext
 
@@ -87,7 +88,7 @@ const authContext = useContext(AuthContext)
           {console.log(`Auth state: ${authContext.isAuth}`)},
           <div className={classes.root}>
             {authContext.isAuth ? (
-            <Typography>Welcome Back {LoginContext.email}!</Typography>
+            <Typography><Link to="/user">Welcome Back {LoginContext.email}!</Link></Typography>
             ) : (
              
               <Typography>Welcome, visitor!</Typography>

@@ -4,12 +4,6 @@ import { InputBase } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { AuthContext } from "../contexts/AuthContext";
-//import { Redirect } from 'react-router-dom'
-
-//Here, we'll render a UserGames component, where they can search for an add
-//games to their list. Ideally, it will query rapidapi, allow them to select a game,
-//and import it by scooping up the JSON data to store locally/on a database,
-//so it doesnt' have to call the API for individual games 30 times.
 
 console.log(`user says auth state is ${AuthContext.isAuth}`);
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +81,7 @@ export default function Collection() {
           inputProps={{ "aria-label": "search" }}
         />
       </div>
-      <h2>Collection</h2>
+      <h2>Collection!</h2>
     </div>
   );
 }

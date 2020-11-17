@@ -13,7 +13,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../contexts/AuthContext";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
+
 
 //Need to do third field, show which are required.
 //Need to be able to validate login (probably with useContext, but maybe localStorage).
@@ -46,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
   formLable: {
     color: "rgba(205, 205, 205, 0.54)",
   },
+  a: {
+    
+  }
 }));
 
 export default function FormDialog() {
@@ -91,7 +95,7 @@ export default function FormDialog() {
           color="primary"
           //onClick={}
         >
-          Home
+         <Link to="/">Home</Link> 
         </Typography>
       ) : (
         <Typography
