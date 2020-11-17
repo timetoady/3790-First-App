@@ -68,7 +68,7 @@ function Wishlist() {
 
   return (
     
-    <div>
+    <div className="wishlistAnimation">
   <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

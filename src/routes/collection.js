@@ -67,7 +67,7 @@ export default function Collection() {
   //const authContext = useContext(AuthContext);
 
   return (
-    <div>
+    <div className="collectionAnimation">
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon />

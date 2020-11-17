@@ -1,143 +1,147 @@
 .theGames {
-    display: grid;
-    grid-template-columns:1fr 1fr;
-    gap: 1rem;
-    
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 
 }
 
-h3{
-  color: #f2f2f2
-}
-
-p{
+h3, p {
   color: #f2f2f2
 }
 
 .theGames div {
-    border: 4px groove #AAA;
-    box-shadow: 2px 3px 2px #DDD;
-    padding: .3rem;
+  border: 4px groove #AAA;
+  box-shadow: 2px 3px 2px #DDD;
+  padding: .3rem;
 }
 
-a{
+a {
   text-decoration: none;
   color: white;
 }
 
-.MuiAppBar-colorPrimary{
+.MuiAppBar-colorPrimary {
   background-color: #000077e8 !important;
 }
 
-
-.MuiPaper-root{
+.MuiPaper-root {
   background-color: none !important;
 }
 
 .nintendo {
-    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ff1a00+6,ff1a00+98&0.1+14,0.66+69,1+97 */
-background: -moz-linear-gradient(-45deg,  rgba(255,26,0,0.1) 6%, rgba(255,26,0,0.1) 14%, rgba(255,26,0,0.66) 69%, rgba(255,26,0,1) 97%, rgba(255,26,0,1) 98%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  rgba(255,26,0,0.1) 6%,rgba(255,26,0,0.1) 14%,rgba(255,26,0,0.66) 69%,rgba(255,26,0,1) 97%,rgba(255,26,0,1) 98%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  rgba(255,26,0,0.1) 6%,rgba(255,26,0,0.1) 14%,rgba(255,26,0,0.66) 69%,rgba(255,26,0,1) 97%,rgba(255,26,0,1) 98%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1aff1a00', endColorstr='#ff1a00',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ff1a00+6,ff1a00+98&0.1+14,0.66+69,1+97 */
+  background: -moz-linear-gradient(-45deg, rgba(255, 26, 0, 0.1) 6%, rgba(255, 26, 0, 0.1) 14%, rgba(255, 26, 0, 0.66) 69%, rgba(255, 26, 0, 1) 97%, rgba(255, 26, 0, 1) 98%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(255, 26, 0, 0.1) 6%, rgba(255, 26, 0, 0.1) 14%, rgba(255, 26, 0, 0.66) 69%, rgba(255, 26, 0, 1) 97%, rgba(255, 26, 0, 1) 98%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(255, 26, 0, 0.1) 6%, rgba(255, 26, 0, 0.1) 14%, rgba(255, 26, 0, 0.66) 69%, rgba(255, 26, 0, 1) 97%, rgba(255, 26, 0, 1) 98%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1aff1a00', endColorstr='#ff1a00', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
 
 }
 
 .sony {
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#001de0+6,000ed6+97&0.1+14,0.66+69,1+97 */
-background: -moz-linear-gradient(-45deg,  rgba(0,29,224,0.1) 6%, rgba(0,28,223,0.1) 14%, rgba(0,19,217,0.66) 69%, rgba(0,14,214,1) 97%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  rgba(0,29,224,0.1) 6%,rgba(0,28,223,0.1) 14%,rgba(0,19,217,0.66) 69%,rgba(0,14,214,1) 97%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  rgba(0,29,224,0.1) 6%,rgba(0,28,223,0.1) 14%,rgba(0,19,217,0.66) 69%,rgba(0,14,214,1) 97%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a001de0', endColorstr='#000ed6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#001de0+6,000ed6+97&0.1+14,0.66+69,1+97 */
+  background: -moz-linear-gradient(-45deg, rgba(0, 29, 224, 0.1) 6%, rgba(0, 28, 223, 0.1) 14%, rgba(0, 19, 217, 0.66) 69%, rgba(0, 14, 214, 1) 97%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(0, 29, 224, 0.1) 6%, rgba(0, 28, 223, 0.1) 14%, rgba(0, 19, 217, 0.66) 69%, rgba(0, 14, 214, 1) 97%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(0, 29, 224, 0.1) 6%, rgba(0, 28, 223, 0.1) 14%, rgba(0, 19, 217, 0.66) 69%, rgba(0, 14, 214, 1) 97%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1a001de0', endColorstr='#000ed6', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
 
 }
 
 .microsoft {
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#00e24b+6,00c400+97&0.1+14,0.66+69,1+97 */
-background: -moz-linear-gradient(-45deg,  rgba(0,226,75,0.1) 6%, rgba(0,223,68,0.1) 14%, rgba(0,205,23,0.66) 69%, rgba(0,196,0,1) 97%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  rgba(0,226,75,0.1) 6%,rgba(0,223,68,0.1) 14%,rgba(0,205,23,0.66) 69%,rgba(0,196,0,1) 97%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  rgba(0,226,75,0.1) 6%,rgba(0,223,68,0.1) 14%,rgba(0,205,23,0.66) 69%,rgba(0,196,0,1) 97%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a00e24b', endColorstr='#00c400',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#00e24b+6,00c400+97&0.1+14,0.66+69,1+97 */
+  background: -moz-linear-gradient(-45deg, rgba(0, 226, 75, 0.1) 6%, rgba(0, 223, 68, 0.1) 14%, rgba(0, 205, 23, 0.66) 69%, rgba(0, 196, 0, 1) 97%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(0, 226, 75, 0.1) 6%, rgba(0, 223, 68, 0.1) 14%, rgba(0, 205, 23, 0.66) 69%, rgba(0, 196, 0, 1) 97%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(0, 226, 75, 0.1) 6%, rgba(0, 223, 68, 0.1) 14%, rgba(0, 205, 23, 0.66) 69%, rgba(0, 196, 0, 1) 97%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1a00e24b', endColorstr='#00c400', GradientType=1);
+  /* IE6-9 fallback on horizontal gradient */
 
 }
-     
-.display{
-    display: block;
+
+.display {
+  display: block;
 }
 
 .sbx-custom__input {
-    display: inline-block;
-    transition: box-shadow .4s ease, background .4s ease;
-    border: 0;
-    border-radius: 4px;
-    box-shadow: inset 0 0 0 1px #CCCCCC;
-    background: #FFFFFF;
-    padding: .4rem;
-    padding-right: 81px;
-    padding-left: 13px;
-    width: 60%;
-    height: 100%;
-    vertical-align: middle;
-    white-space: normal;
-    font-size: inherit;
-    appearance: none;
-    margin-bottom: 1.95rem;
-  }
-  
-  .sbx-custom__input::-webkit-search-decoration, .sbx-custom__input::-webkit-search-cancel-button, .sbx-custom__input::-webkit-search-results-button, .sbx-custom__input::-webkit-search-results-decoration {
-    display: none;
-  }
-  
-  .sbx-custom__input:hover {
-    box-shadow: inset 0 0 0 1px #b3b3b3;
-  }
-  
-  .sbx-custom__input:focus, .sbx-custom__input:active {
-    outline: 0;
-    box-shadow: inset 0 0 0 1px #3E82F7;
-    background: #FFFFFF;
-  }
-  
-  .sbx-custom__input::placeholder {
-    color: #AAAAAA;
-  }
+  display: inline-block;
+  transition: box-shadow .4s ease, background .4s ease;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px #CCCCCC;
+  background: #FFFFFF;
+  padding: .4rem;
+  padding-right: 81px;
+  padding-left: 13px;
+  width: 60%;
+  height: 100%;
+  vertical-align: middle;
+  white-space: normal;
+  font-size: inherit;
+  appearance: none;
+  margin-bottom: 1.95rem;
+}
 
-  .makeStyles-root-1 h2{
-    display: block;
-  }
+.sbx-custom__input::-webkit-search-decoration,
+.sbx-custom__input::-webkit-search-cancel-button,
+.sbx-custom__input::-webkit-search-results-button,
+.sbx-custom__input::-webkit-search-results-decoration {
+  display: none;
+}
 
-  .MuiGridListTile-root {
-    height: 27vh !important;
-    
-  } 
+.sbx-custom__input:hover {
+  box-shadow: inset 0 0 0 1px #b3b3b3;
+}
 
-  .MuiAccordion-root {
-    margin: .2rem;
-    background-color: rgba(0, 0, 0, 0.1) !important;
-    position: relative;
-    box-shadow: none !important;
-    max-width: 100% !important;
+.sbx-custom__input:focus,
+.sbx-custom__input:active {
+  outline: 0;
+  box-shadow: inset 0 0 0 1px #3E82F7;
+  background: #FFFFFF;
+}
 
-    
-  }
+.sbx-custom__input::placeholder {
+  color: #AAAAAA;
+}
 
-  .MuiAccordionSummary-content {
-    margin: 0;
-    color: #f2f2f2 !important;
-    font-size: .8rem;
-    
-    
-  }
+.makeStyles-root-1 h2 {
+  display: block;
+}
 
+.MuiGridListTile-root {
+  height: 27vh !important;
 
-  .MuiIconButton-root{
-    padding: 5px !important;
-    color: #f2f2f2 !important;
-  }
+}
 
-  /* .MuiButtonBase-root {
+.MuiAccordion-root {
+  margin: .2rem;
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  position: relative;
+  box-shadow: none !important;
+  max-width: 100% !important;
+
+}
+
+.MuiAccordionSummary-content {
+  margin: 0;
   color: #f2f2f2 !important;
-  } */
+  font-size: .8rem;
+
+
+}
+
+.MuiIconButton-root {
+  padding: 5px !important;
+  color: #f2f2f2 !important;
+}
 
 .MuiGridLIstTitleBar-actionIcon {
   max-height: 90%;
@@ -153,59 +157,92 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a00e24b', e
   justify-content: left;
 }
 
-.lazyimg img{
+.lazyimg img {
   height: 27vh;
   right: 50% !important;
-  
+
 }
 
 
-.MuiDialog-paper div{
-  
-
+.MuiDialog-paper div {
   max-width: 50vw;
 }
-
-/* .MuiDialog-paper p{
-  color: #f2f2f2;
-} */
-
-/* .MuiTextField-root{
-  border-bottom: #f2f2f2 1px solid !important;
-
-} */
-
-/* .MuiDialogContent-root{
-  background-color: #000000d0;
-}
-
-.MuiInputLabel-root{
-  color: white !important;
-} */
-
-/* .MuiDialog-paper{
-  background-color: #f2f2f2 !important;
-} */
 
 .MuiPopover-paper {
   background-color: rgba(0, 0, 0, 0.89) !important;
 }
 
+.collectionAnimation{
+  transition: all .3s ease-in-out;
+  animation: switchViews .6s ease-in-out forwards;
+  transform-origin: 100% 50%;
+}
+
+@keyframes switchViews {
+  0% {
+    opacity:0.2;
+    transform: translateX(4rem) scale(1.5);
+  }
+  25%{
+    opacity:0.4;
+    transform: translateX(3rem) scale(1.1);
+  }
+  75% {
+    opacity:0.8;
+    transform: translateX(2rem) scale(0.8);
+  }
+  100%{
+    opacity:1;
+    transform: translateX(0) scale(1.0);
+  }
+}
+
+.wishlistAnimation {
+  transition: all .3s ease-in-out;
+  animation: switchViews2 .6s ease-in-out forwards;
+  transform-origin: 50% 100%;
+}
+
+@keyframes switchViews2 {
+  0% {
+    opacity:0.2;
+    transform: translateY(4rem) scale(1.5) rotateX(180deg);
+
+  }
+  25%{
+    opacity:0.4;
+    transform: translateY(3rem) scale(1.1) rotateX(100deg);
+  }
+  75% {
+    opacity:0.8;
+    transform: translateY(2rem) scale(0.8) rotateX(50deg);
+  }
+  100%{
+    opacity:1;
+    transform: translateY(0) scale(1.0) rotateX(0deg);
+  }
+}
+
 @media screen and (max-width: 850px) {
 
-    .theGames {
-        grid-template-columns:1fr;
-        gap: .5rem;
-    
-    }
-    .theGames p {
-     font-size: .8rem;
-    }
+  .theGames {
+    grid-template-columns: 1fr;
+    gap: .5rem;
 
-    .sbx-custom__input {
-      width: 100%;
-    }
-    .theButton {
-      font-size: .8rem;
-    }
+  }
+
+  .theGames p {
+    font-size: .8rem;
+  }
+
+  .sbx-custom__input {
+    width: 100%;
+  }
+
+  .theButton {
+    font-size: .8rem;
+  }
+  .sbx-custom__input{
+    width: 100%
+  }
 }
