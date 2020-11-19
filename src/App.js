@@ -18,13 +18,6 @@ function App() {
       <section className="DefaultHome">
 
       <div className="itemDisp">
-        <div>
-          {/* <Platforms /> */}
-        </div>
-
-        <div>
-          {/* <Games /> */}
-        </div>
         
       </div>
       </section>

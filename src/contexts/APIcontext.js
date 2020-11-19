@@ -28,7 +28,9 @@ useEffect(()=> {
 
 return (
   <APIcontext.Provider value= {
-      {gameData}
+      {gameData},
+      getGames()
+      
   }>
   {props.children}
   </APIcontext.Provider>

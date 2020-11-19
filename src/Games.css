@@ -246,3 +246,19 @@ a {
     width: 100%
   }
 }
+
+.searchResultsView{
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  
+}
+
+.searchResults:hover{
+  outline: 1px white solid;
+  cursor: pointer;
+}
+
+.searchResultsView img{
+  width: 100%;
+}
