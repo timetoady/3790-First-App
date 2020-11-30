@@ -57,6 +57,7 @@ export default function FormDialog() {
   //Open of signup dialog setting
   const [open, setOpen] = useState(false);
   const authContext = useContext(AuthContext);
+  const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = authContext
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -65,15 +66,25 @@ export default function FormDialog() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  // const handleSignup = async (email, password) => {
+  //   try {
+  //     await createUserWithEmailAndPassword(email, password)
+  //     handleClose()
+  //   } catch(error){
+  //     console.error(error)
+  //   }
+  // }
+
+
   const handleLoginState = () => {
-    console.log(`Auth state is ${authContext.isAuth}`);
-    if (authContext.isAuth) {
+    console.log(`Signup says auth state is ${authContext.isAuthenticated}`);
+    if (authContext.isAuthenticated) {
       authContext.logout();
       handleClose();
-
       return;
     }
-    if (!authContext.isAuth) {
+    if (!authContext.isAuthenticated) {
       handleClickOpen();
       if (open) {
         authContext.login();
@@ -82,18 +93,17 @@ export default function FormDialog() {
   };
 
   let redirect = null;
-  authContext.isAuth
+  authContext.isAuthenticated
     ? (redirect = <Redirect to="/user" />)
     : (redirect = <Redirect to="/" />);
 
   return (
     <div>
       {redirect}
-      {authContext.isAuth ? (
+      {authContext.isAuthenticated ? (
         <Typography
           className={classes.button}
           color="primary"
-          //onClick={}
         >
          <Link to="/">Home</Link> 
         </Typography>
@@ -129,22 +139,22 @@ export default function FormDialog() {
               .min(8)
               .max(30)
               .required("Please confirm your password.")
-              // .test('passwords-match', 'Passwords must match ya fool', function(value) {
-              //   return this.parent.password === value;
-              // }),
               .oneOf(
                 [Yup.ref("password")],
                 "Does not match password. Try again."
               ),
             URL: Yup.string().url("Must be a valid URL."),
           })}
-          onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+          onSubmit={ async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
               console.log(values.email, values.password);
-              authContext.login();
+              await createUserWithEmailAndPassword(values.email, values.password)
               handleClose();
             } catch (error) {
               console.error(error);
+              setStatus({ success: false})
+              setErrors({submit: error.message})
+              setSubmitting(false)
             }
           }}
         >
@@ -222,17 +232,14 @@ export default function FormDialog() {
                 <Button onClick={handleClose} color="primary">
                   Cancel
                 </Button>
-                {/* Here is where we make function to confirm password */}
                 <Button
-                  //disabled={confirmState}
-                  //onClick={setToStorage}
                   type="submit"
                   color="primary"
                   disabled={
                     errors.passwordConfirm || errors.password || errors.email
                   }
                 >
-                  Confirm
+                  Signup
                 </Button>
               </DialogActions>
             </form>

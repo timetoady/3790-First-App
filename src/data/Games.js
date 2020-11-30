@@ -25,7 +25,7 @@ function Games() {
 
   return (
     <div>
-      <h2>My personal favorite games list ({allGames.length}): </h2>
+      <h2>List of Great Games ({allGames.length}): </h2>
       <input
         type="search"
         placeholder="Search games..."

@@ -5,7 +5,7 @@ import { fade, makeStyles } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search';
 import { AuthContext } from '../contexts/AuthContext'
 
-console.log(`user says auth state is ${AuthContext.isAuth}`)
+console.log(`user says auth state is ${AuthContext.isAuthenticated}`)
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

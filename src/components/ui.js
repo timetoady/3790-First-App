@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "./Dialog";
 import Signup from "./Signup";
 import { AuthContext } from "../contexts/AuthContext";
-import { LoginContextProvider, LoginContext } from "../contexts/LoginContext";
 import { Link } from "react-router-dom";
 
 //Here, import LoginContext
@@ -53,9 +52,6 @@ export default function SimpleMenu() {
   };
 const authContext = useContext(AuthContext)
   return (
-    <div>
-      <LoginContextProvider>
-        
         <div className={classes.root}>
           <Button
             className={classes.button}
@@ -85,19 +81,26 @@ const authContext = useContext(AuthContext)
               About
             </MenuItem>
           </Menu>
-          {console.log(`Auth state: ${authContext.isAuth}`)},
+          {console.log(`Auth state: ${authContext.isAuthenticated}`)},
           <div className={classes.root}>
-            {authContext.isAuth ? (
-            <Typography><Link to="/user">Welcome Back {LoginContext.email}!</Link></Typography>
+            {authContext.isAuthenticated ? (
+            <Typography><Link to="/user">{authContext.user.name}</Link></Typography>
             ) : (
              
               <Typography>Welcome, visitor!</Typography>
             )}
 
-            <Avatar></Avatar>
+            {authContext.isAuthenticated ? (
+            <Avatar 
+            src={authContext.user.avatar} alt={authContext.user.name}
+            ></Avatar>
+            ) : (
+            <Avatar></Avatar> 
+            )
+            }
+            
           </div>
         </div>
-      </LoginContextProvider>
-    </div>
+    
   );
 }

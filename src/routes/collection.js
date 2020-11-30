@@ -6,7 +6,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { AuthContext } from "../contexts/AuthContext";
 import axios from "axios";
 
-console.log(`user says auth state is ${AuthContext.isAuth}`);
+console.log(`user says auth state is ${AuthContext.isAuthenticated}`);
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -135,7 +135,7 @@ export default function Collection() {
     return (
       <div className="searchResults" key={reply.id}>
         <h3>{reply.name}</h3>
-        <img src={reply.background_image}></img>
+        <img src={reply.background_image} alt={reply.slug}></img>
         <p>Released: {reply.released}</p>
         <p>ID: {reply.id}</p>
       </div>
