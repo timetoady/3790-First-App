@@ -1,43 +1,44 @@
-import React, { useContext, createContext, useState, useEffect } from 'react'
+import React, { createContext, useState } from 'react'
 import axios from 'axios'
 
-const GameContext = createContext({
+export const GameContext = createContext({
     gameData: {},
+    //getGameDetails: () => Promise.resolve()
+    
 })
 
-export const GameContextProvider = (props) =>{
+const GameContextProvider = ({children}) =>{
 const [gameData, setGameData] = useState({})
 
 
-useEffect(()=> {
-    const getGames = (searchTerm) => {
-        axios({
-          method: "get",
-          url: `https://rawg-video-games-database.p.rapidapi.com/games?search=${searchTerm}`,
-          headers: {
-            "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
-            "x-rapidapi-key": process.env.REACT_APP_RAWG_GAMING_API_KEY,
-          },
-        }).then(function (response) {
-          setGameData({
-            gameData: response.data.results,
-          });
-        });
-      };
-})
+const getGameDetails = (searchTerm) => {
+  axios({
+    method: "GET",
+    url: `https://rawg-video-games-database.p.rapidapi.com/games/${searchTerm}`,
+    headers: {
+      "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
+      "x-rapidapi-key": process.env.REACT_APP_RAWG_GAMING_API_KEY,
+    },
+  }).then(function (response) {
+    setGameData({
+      gameData: response.data.results,
+    });
+  });
+};
 
 return (
-  <APIcontext.Provider value= {
-      {gameData},
-      getGames()
-      
-  }>
-  {props.children}
-  </APIcontext.Provider>
-)
+  <GameContext.Provider
+    value={{
+      gameData,
+      getGameDetails
 
+    }}
+  >
+    {children}
+  </GameContext.Provider>
+);
 
 }
 
 
-export const useGameContext = () => useContext(GameContext)
+export default GameContextProvider

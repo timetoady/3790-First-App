@@ -35,7 +35,7 @@ export default function FormDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const authContext = useContext(AuthContext);
-  const { signInWithGoogle, signInWithEmailAndPassword } = authContext
+  const { signInWithGoogle, signInWithEmailAndPassword, signInWithFacebook } = authContext
 
   const handleGoogleClick = async () => {
     try {
@@ -46,6 +46,16 @@ export default function FormDialog(props) {
     }
   }
 
+const handleFacebookClick = async () => {
+  try{
+    await signInWithFacebook()
+    handleClose()
+  }catch(error){
+    console.log(`${error} -- came from Dialog`)
+    console.error(error)
+    alert(`${error}. Please confirm and try again.`)
+  }
+}
 
   const handleLoginState = () => {
     console.log(`Auth state is ${authContext.isAuthenticated}`);
@@ -111,6 +121,15 @@ export default function FormDialog(props) {
         >
           <img alt="Google" className= {classes.providerIcon} src='/static/images/google-icon.svg'/>
          Login with Google
+        </Button>
+        <Button
+        className={classes.googleButton}
+        fullWidth
+        onClick={handleFacebookClick}
+        size="large"
+        >
+      <img alt="Facebook" className= {classes.providerIcon} src='/static/images/facebook-icon.svg'/>
+      Login with Facebook
         </Button>
         <Formik
           initialValues={{ email: "you@email.com", password: "" }}
@@ -181,6 +200,7 @@ export default function FormDialog(props) {
                   helperText={touched.password && errors.password}
                   required
                 />
+
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose} color="primary">

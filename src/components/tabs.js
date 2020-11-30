@@ -8,9 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Wishlist from '../routes/wishlist';
 import MyCollection from '../routes/collection'
+import GameContextProvider from '../contexts/APIcontext'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+  // const gameContext = useContext(GameContext);
+  // const { getGameDetails } = gameContext
 
   return (
     <div
@@ -59,11 +62,13 @@ export default function SimpleTabs() {
 
   return (
     <div className={classes.root}>
+      <GameContextProvider>
       <AppBar position="static">
+       
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Collection" {...a11yProps(0)} />
           <Tab label="Wishlist" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Your Account" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -73,8 +78,9 @@ export default function SimpleTabs() {
         <Wishlist></Wishlist>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        Your Account
       </TabPanel>
+      </GameContextProvider>
     </div>
   );
 }

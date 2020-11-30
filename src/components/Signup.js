@@ -57,7 +57,7 @@ export default function FormDialog() {
   //Open of signup dialog setting
   const [open, setOpen] = useState(false);
   const authContext = useContext(AuthContext);
-  const { createUserWithEmailAndPassword, signInWithEmailAndPassword } = authContext
+  const { createUserWithEmailAndPassword } = authContext
 
   const handleClickOpen = () => {
     setOpen(true);
