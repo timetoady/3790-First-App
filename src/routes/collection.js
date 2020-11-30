@@ -12,10 +12,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 //import { GameContext } from "../contexts/APIcontext";
+//import axios from 'axios'
 
-//import CollectionDialog from "../routes/addToCollectionDialog"
-
-//import axios from "axios";
 
 console.log(`Collection says auth state is ${AuthContext.isAuthenticated}`);
 const useStyles = makeStyles((theme) => ({
@@ -103,6 +101,11 @@ export default function Collection() {
   //const [selectedGame, setSelectedGame] = useState("")
   const [open, setOpen] = useState(false);
   const focusSearch = useRef(null);
+  // const [gameData, setGameData] = useState({
+  //   game: {},
+  // });
+
+
   
   useEffect(() => {
     focusSearch.current.focus();
@@ -144,19 +147,6 @@ export default function Collection() {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  // const getGame = async(query) => {
-  //   const results = await fetch(`https://rawg-video-games-database.p.rapidapi.com/games/${query}`, {
-  //     headers: {
-  //       "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
-  //       "x-rapidapi-key": process.env.REACT_APP_RAWG_GAMING_API_KEY,
-  //       "accept": 'application/json'
-  //     }
-  //   })
-  //   const gameData = await results.json()
-  //   console.log(gameData)
-  //   return gameData.results
-  // }
-
   useEffect(() => {
     let currentQuery = true;
     const controller = new AbortController();
@@ -175,6 +165,27 @@ export default function Collection() {
     };
   }, [searchTerm]);
 
+  // const getGameDetails = (searchTerm) => {
+  //   axios({
+  //     method: "GET",
+  //     url: `https://rawg-video-games-database.p.rapidapi.com/games/${searchTerm}`,
+  //     headers: {
+  //       "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
+  //       "x-rapidapi-key": process.env.REACT_APP_RAWG_GAMING_API_KEY,
+  //     },
+  //   }).then(function (response) {
+  //     setGameData({
+  //       game: response.results
+  //     });
+  //   });
+  // };
+
+
+// const showGameInfo = (number) => {
+//   getGameDetails(number)
+//   console.log(gameData)
+// }
+
   // let renderGames = searchResults.map((reply) => {
   //   return (
   //     <div className="searchResults" key={reply.id} >
@@ -185,7 +196,6 @@ export default function Collection() {
   //     </div>
   //   );
   // });
-
 
   return (
     <div>
@@ -249,6 +259,7 @@ export default function Collection() {
           <p>Released: {reply.released}</p>
           <p>ID: {reply.id}</p>
           </div>
+
       </div>
     )})}
 
