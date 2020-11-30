@@ -13,6 +13,8 @@
 
 # api keys
 .env
+node_env
+firebase-debug.log
 
 # misc
 .DS_Store
