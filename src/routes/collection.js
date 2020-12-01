@@ -13,7 +13,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 //import { GameContext } from "../contexts/APIcontext";
 import CircularIndeterminate from "../components/loadingCircle";
 import axios from 'axios'
-//import firebase from "../lib/firebase";
+import firebase from "../lib/firebase";
 
 console.log(`Collection says auth state is ${AuthContext.isAuthenticated}`);
 const useStyles = makeStyles((theme) => ({
@@ -113,7 +113,22 @@ export default function Collection() {
   const focusSearch = useRef(null);
   const authContext = useContext(AuthContext)
   const userEmail = authContext.user.email
-  
+  const dbUser = firebase.firestore().collection("users").doc(userEmail)
+  //const db = firebase.firestore()
+
+  const docRef = dbUser
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+        console.log(doc.data().collection[0].description)
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
 
   useEffect(() => {
     focusSearch.current.focus();
@@ -173,6 +188,10 @@ export default function Collection() {
     console.log(gameData.game);
     // this is where we'll send to the db, get reply
     console.log(userEmail)
+    dbUser.update({
+      collection: firebase.firestore.FieldValue.arrayUnion(gameData.game)
+    })
+
     handleClose();
   };
 

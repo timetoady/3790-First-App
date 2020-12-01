@@ -94,8 +94,9 @@ const authContext = useContext(AuthContext)
 
             {authContext.isAuthenticated ? (
             <Avatar 
-            src={authContext.user.avatar} alt={authContext.user.name}
+            src={authContext.user.avatar ? (authContext.user.avatar) : null} alt={authContext.user.name}
             ></Avatar>
+            //this is where I'll hook up the avatar photo when I get it from the database context
             ) : (
             <Avatar></Avatar> 
             )
