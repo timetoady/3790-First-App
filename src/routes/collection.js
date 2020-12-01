@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "../App.css";
 import { InputBase } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
@@ -10,8 +10,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { GameContext } from "../contexts/APIcontext";
+//import { GameContext } from "../contexts/APIcontext";
 import CircularIndeterminate from "../components/loadingCircle";
+import axios from 'axios'
 
 console.log(`Collection says auth state is ${AuthContext.isAuthenticated}`);
 const useStyles = makeStyles((theme) => ({
@@ -93,14 +94,13 @@ const getGames = async (query) => {
     }
   );
   const gamesData = await results.json();
-  console.log(gamesData);
   return gamesData.results;
 };
 
 export default function Collection() {
   const classes = useStyles();
-  const gameContext = useContext(GameContext);
-  const { getGameDetails, gameData } = gameContext;
+  //const gameContext = useContext(GameContext);
+  //const { getGameDetails, gameData } = gameContext;
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedGame, setSelectedGame] = useState("");
@@ -108,6 +108,7 @@ export default function Collection() {
   const [selectedGameImg, setSelectedGameImg] = useState("");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [gameData, setGameData] = useState({})
   const focusSearch = useRef(null);
 
   useEffect(() => {
@@ -137,6 +138,23 @@ export default function Collection() {
   };
 
   useEffect(() => {
+    const getGameDetails = (searchTerm) => {
+      setLoading(true)
+      axios({
+        method: "GET",
+        url: `https://rawg-video-games-database.p.rapidapi.com/games/${searchTerm}`,
+        headers: {
+          "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
+          "x-rapidapi-key": process.env.REACT_APP_RAWG_GAMING_API_KEY,
+        },
+      }).then(function (response) {
+        console.log(response.data)
+        setGameData({
+          game: response.data
+        });
+        setLoading(false)
+      });
+    };
     const loadSelectedGame = async () => {
       if (selectedGame) {
         showLoading();
@@ -145,6 +163,9 @@ export default function Collection() {
       }
     };
     loadSelectedGame();
+    return () => {
+      getGameDetails();
+    };
   }, [selectedGame]);
 
   const handleGameDetails = async () => {
