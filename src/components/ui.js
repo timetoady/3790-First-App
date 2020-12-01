@@ -58,6 +58,7 @@ const authContext = useContext(AuthContext)
             aria-controls="simple-menu"
             aria-haspopup="true"
             onClick={handleClick}
+            
           >
             Menu
           </Button>
@@ -69,15 +70,16 @@ const authContext = useContext(AuthContext)
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
+            
           >
             {/* Here, have to have menu item handle open of modal */}
-            <MenuItem className={classes.menuItem} onClick={handleDialogToggle}>
-              <Dialog open={dialogOpen} onClose={handleDialogToggle}></Dialog>
+            <MenuItem tabIndex={0} className={classes.menuItem} onClick={handleDialogToggle}>
+              <Dialog  open={dialogOpen} onClose={handleDialogToggle}></Dialog>
             </MenuItem>
-            <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
+            <MenuItem tabIndex={0} className={classes.menuItem} onClick={handleMenuClose}>
               <Signup></Signup>
             </MenuItem>
-            <MenuItem className={classes.menuItem} onClick={handleMenuClose}>
+            <MenuItem tabIndex={0} className={classes.menuItem} onClick={handleMenuClose}>
               About
             </MenuItem>
           </Menu>

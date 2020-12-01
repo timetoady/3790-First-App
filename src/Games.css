@@ -262,3 +262,21 @@ a {
 .searchResultsView img{
   width: 100%;
 }
+
+@media screen and (max-width: 850px) {
+  .searchResultsView{
+    
+    gap: .75rem;
+    grid-template-columns: 1fr 1fr;
+    
+  }
+}
+
+@media screen and (max-width: 504px) {
+  .searchResultsView{
+    
+    gap: .75rem;
+    grid-template-columns: 1fr;
+    
+  }
+}

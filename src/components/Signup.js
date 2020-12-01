@@ -236,7 +236,7 @@ export default function FormDialog() {
                   type="submit"
                   color="primary"
                   disabled={
-                    errors.passwordConfirm || errors.password || errors.email
+                    Boolean(errors.passwordConfirm || errors.password || errors.email)
                   }
                 >
                   Signup

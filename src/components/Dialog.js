@@ -102,10 +102,12 @@ const handleFacebookClick = async () => {
           className={classes.button}
           color="primary"
           onClick={handleLoginState}
+          
         >
           Login
         </Typography>
       )}
+      <div>
       <Dialog
         className={classes.root}
         open={open}
@@ -185,6 +187,7 @@ const handleFacebookClick = async () => {
                   error={Boolean(touched.email && errors.email)}
                   helperText={touched.email && errors.email}
                   required
+                  tabIndex={0}
                 />
                 <TextField
                   margin="dense"
@@ -199,6 +202,7 @@ const handleFacebookClick = async () => {
                   error={Boolean(touched.password && errors.password)}
                   helperText={touched.password && errors.password}
                   required
+                  
                 />
 
               </DialogContent>
@@ -219,6 +223,7 @@ const handleFacebookClick = async () => {
           )}
         </Formik>
       </Dialog>
+      </div>
     </div>
   );
 }
