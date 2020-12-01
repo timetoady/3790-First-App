@@ -163,9 +163,6 @@ export default function Collection() {
       }
     };
     loadSelectedGame();
-    return () => {
-      getGameDetails();
-    };
   }, [selectedGame]);
 
   const handleGameDetails = async () => {
