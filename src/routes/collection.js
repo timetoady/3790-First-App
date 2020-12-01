@@ -191,7 +191,7 @@ export default function Collection() {
     dbUser.update({
       collection: firebase.firestore.FieldValue.arrayUnion(gameData.game)
     })
-
+    console.log("Added new game to collection!")
     handleClose();
   };
 
