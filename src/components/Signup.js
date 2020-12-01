@@ -14,6 +14,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { AuthContext } from "../contexts/AuthContext";
 import { Redirect, Link } from "react-router-dom";
+import firebase from "../lib/firebase";
+
 
 
 //Need to do third field, show which are required.
@@ -125,7 +127,7 @@ export default function FormDialog() {
       >
         <DialogTitle id="form-dialog-title">Sign up</DialogTitle>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ email: "", password: "",  }}
           validationSchema={Yup.object().shape({
             email: Yup.string()
               .email("Invalid email provided.")
@@ -143,12 +145,36 @@ export default function FormDialog() {
                 [Yup.ref("password")],
                 "Does not match password. Try again."
               ),
-            URL: Yup.string().url("Must be a valid URL."),
+            picURL: Yup.string().url("Must be a valid URL."),
           })}
           onSubmit={ async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
-              console.log(values.email, values.password);
+              console.log(values.email, values.password, values.picURL);
               await createUserWithEmailAndPassword(values.email, values.password)
+              .then(function(user) {
+                // get user data from the auth trigger
+                const userUid = values.email; // The UID of the user.
+                const email = values.email; // The email of the user.
+                const displayName = values.email; // The display name of the user.
+                const userImg = values.picURL
+                console.log(`User email from create: ${user.email}`)
+                // set account  doc  
+                const account = {
+                  useruid: userUid,
+                  email: email,
+                  userName: displayName,
+                  collection: [],
+                  wishlist: [],
+                  avatar: userImg 
+
+                }
+                firebase.firestore().collection("users").doc(userUid).set(account); 
+              }).then(() => console.log("Successfully added user info to database."))
+              .catch(function(error) {
+                // Handle Errors here.
+                console.log("There was an error.")
+                console.error(error)
+              });
               handleClose();
             } catch (error) {
               console.error(error);
@@ -224,8 +250,13 @@ export default function FormDialog() {
                   id="picURL"
                   name="picURL"
                   label="Avatar Photo URL"
+                  value={values.picURL}
                   type="url"
                   fullWidth
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={Boolean(touched.picURL && errors.picURL)}
+                  helperText={touched.picURL && errors.picURL}
                 />
               </DialogContent>
               <DialogActions>

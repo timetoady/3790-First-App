@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import "../App.css";
 import { InputBase } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
@@ -13,6 +13,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 //import { GameContext } from "../contexts/APIcontext";
 import CircularIndeterminate from "../components/loadingCircle";
 import axios from 'axios'
+//import firebase from "../lib/firebase";
 
 console.log(`Collection says auth state is ${AuthContext.isAuthenticated}`);
 const useStyles = makeStyles((theme) => ({
@@ -110,6 +111,9 @@ export default function Collection() {
   const [loading, setLoading] = useState(false);
   const [gameData, setGameData] = useState({})
   const focusSearch = useRef(null);
+  const authContext = useContext(AuthContext)
+  const userEmail = authContext.user.email
+  
 
   useEffect(() => {
     focusSearch.current.focus();
@@ -168,7 +172,7 @@ export default function Collection() {
   const handleGameDetails = async () => {
     console.log(gameData.game);
     // this is where we'll send to the db, get reply
-
+    console.log(userEmail)
     handleClose();
   };
 

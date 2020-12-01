@@ -40,6 +40,7 @@ export const AuthContext = createContext({
 
 const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialAuthState);
+  
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     return firebase.auth().signInWithPopup(provider);
@@ -50,7 +51,8 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const createUserWithEmailAndPassword = async (email, password) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password);
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+
   };
 
   const signInWithFacebook = () => {
