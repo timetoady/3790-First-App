@@ -76,7 +76,7 @@ function Games2() {
   useEffect(() => {
     getGames();
     return 
-  });
+  }, []);
 
   //Do function that will change grid column number depeneding on screen width
   const columnAdjust = () => {
