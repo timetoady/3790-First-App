@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
   },
   loader1: {
-    margin: ".5rem 0 .5rem 2rem",
+    margin: ".5rem 0 .5rem 0rem",
   },
 }));
 
@@ -309,13 +309,13 @@ export default function Collection() {
     setSearchTerm(event.target.value);
   };
 
-  const logGameData = () => {
-    console.log(`Selected game ID: ${selectedGame}`);
-    console.log(`Selected game name: ${selectedGameName}`);
-    console.log(`Selected game IMG URL: ${selectedGameImg}`);
-    console.log("Game file in gameData:");
-    console.log(gameData.game);
-  };
+  // const logGameData = () => {
+  //   console.log(`Selected game ID: ${selectedGame}`);
+  //   console.log(`Selected game name: ${selectedGameName}`);
+  //   console.log(`Selected game IMG URL: ${selectedGameImg}`);
+  //   console.log("Game file in gameData:");
+  //   console.log(gameData.game);
+  // };
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -323,9 +323,12 @@ export default function Collection() {
 
   return (
     <div>
+  
+            <h2>{userEmail}'s Collection</h2>
+         
       <div className="collectionAnimation">
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
+        <div className={classes.search} >
+          <div className={classes.searchIcon} >
             <SearchIcon />
           </div>
           <InputBase
@@ -342,16 +345,16 @@ export default function Collection() {
             inputProps={{ "aria-label": "search" }}
           />
         </div>
-        <h2>Collection</h2>
-        <Button color="primary" variant="outlined" onClick={logGameData}>
-          Check
-        </Button>
+
         <div className={classes.loader1}>
           {loading ? (
             <CircularIndeterminate></CircularIndeterminate>
-          ) : (
-            <h2>Results:</h2>
-          )}
+          )  
+          : 
+            null
+          }
+          
+         
         </div>
         <div>
           <Dialog
@@ -389,13 +392,7 @@ export default function Collection() {
           </Dialog>
         </div>
 
-        <div className={classes.loader1}>
-          {loading ? (
-            <CircularIndeterminate></CircularIndeterminate>
-          ) : (
-            <h2>{userEmail}'s Collection</h2>
-          )}
-        </div>
+       
         <div>
           <Dialog
             open={open2}
@@ -444,10 +441,13 @@ export default function Collection() {
         </div>
 
         <div className="searchResultsView">
+       
+        {searchResults && loading ? (<h3>Searching...</h3>) :  null}
           {searchResults.map((reply) => {
             return (
               <div
                 className="searchResults"
+                title="Click to add to collection"
                 key={reply.id}
                 value={reply.id}
                 onClick={() =>
@@ -477,6 +477,7 @@ export default function Collection() {
           {loading ? (
             <CircularIndeterminate></CircularIndeterminate>
           ) : (
+            
             collection.map((reply) => {
               return (
                 <div
@@ -485,6 +486,10 @@ export default function Collection() {
                   value={reply.id}
                   
                 >
+                   <div className={classes.loader1}>
+         
+        </div>
+
                   <div
                     variant="outlined"
                     color="primary"

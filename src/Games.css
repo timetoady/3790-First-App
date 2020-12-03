@@ -272,6 +272,10 @@ a {
   }
 }
 
+.searchResults h3, p{
+  margin-left: .5rem;
+}
+
 @media screen and (max-width: 504px) {
   .searchResultsView{
     
@@ -279,5 +283,26 @@ a {
     grid-template-columns: 1fr;
     
   }
+
+  .userName a{
+    font-size: .75rem;
+  }
+
+  .MuiAppBar-root button{
+    font-size: .78rem ;
+
+  }
+  .makeStyles-inputInput-37{
+    width: 75vw !important;
+    margin: 0 auto !important;
+  }
+  .MuiBox-root-29{
+    padding: .75rem .2rem !important;
+  }
+  .searchResults{
+    padding: .75rem 0rem !important;
+    border: 2px white outset
+  }
+
 }
 

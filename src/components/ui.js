@@ -127,7 +127,7 @@ export default function SimpleMenu() {
       {console.log(`Auth state: ${authContext.isAuthenticated}`)},
       <div className={classes.root}>
         {authContext.isAuthenticated ? (
-          <Typography>
+          <Typography className="userName">
             <Link to="/user">{authContext.user.name}</Link>
           </Typography>
         ) : (
