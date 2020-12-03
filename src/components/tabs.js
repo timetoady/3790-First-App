@@ -19,6 +19,7 @@ import MyCollection from "../routes/collection";
 import { AuthContext } from "../contexts/AuthContext";
 import firebase from "../lib/firebase";
 import Dialog from "@material-ui/core/Dialog";
+import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -85,6 +86,12 @@ export default function SimpleTabs() {
   const [open, setOpen] = useState(false);
   const [loginText, setLoginText] = useState("");
   const [hideState, setHideState] = useState(false);
+  const [openAvatar, setOpenAvatar] = useState(false);
+  const [avatarValue, setAvatarValue] = useState("");
+  const [changeAvatarText, setChangeAvatarText] = useState(
+    "Add new avatar photo URL below."
+  );
+  const [avatarDialogState, setAvatarDialogState] = useState(false);
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
@@ -133,12 +140,38 @@ export default function SimpleTabs() {
       });
   };
 
+  const handleAvatarOpen = () => {
+    setOpenAvatar(!openAvatar);
+    setAvatarDialogState(true);
+  };
+
+  const handleNewAvatarImgURL = async (newPhotoURL) => {
+    let userEmail = authContext.user.email;
+    const dbUser = firebase.firestore().collection("users").doc(userEmail);
+    dbUser
+      .update({
+        avatar: newPhotoURL,
+      })
+      .then(() => {
+        setTimeout(function () {
+          setChangeAvatarText(
+            "Update complete. It may take a few minutes and you may have to refersh your browser to complete."
+          );
+          setAvatarDialogState(false);
+        }, 100);
+      })
+      .catch((error) => {
+        setChangeAvatarText(`${error}`);
+      });
+  };
+
   const handleOpenState = () => {
     setOpen(!open);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setHideState(false);
   };
 
   useEffect(() => {
@@ -149,8 +182,62 @@ export default function SimpleTabs() {
     setValue(newValue);
   };
 
+  const handleChangeAvatarValue = (event) => {
+    setAvatarValue(event.target.value);
+  };
+
   return (
     <div>
+      {avatarDialogState ? (
+        <>
+          <Dialog
+            open={openAvatar}
+            onClose={handleAvatarOpen}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Change Avatar</DialogTitle>
+            <DialogContent>
+              <DialogContentText>{changeAvatarText}</DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="avatarPhotoURL"
+                label="Email Address"
+                type="email"
+                fullWidth
+                onChange={handleChangeAvatarValue}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleAvatarOpen} color="primary">
+                CANCEL
+              </Button>
+              <Button
+                onClick={() => handleNewAvatarImgURL(avatarValue)}
+                color="primary"
+              >
+                CONFIRM
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      ) : (
+        <>
+          <Dialog
+            open={openAvatar}
+            onClose={handleAvatarOpen}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogContentText>{changeAvatarText}</DialogContentText>
+            <DialogActions>
+              <Button onClick={handleAvatarOpen} color="primary">
+                CLOSE
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )}
+
       <div>
         <Dialog
           open={open}
@@ -160,8 +247,8 @@ export default function SimpleTabs() {
         >
           {hideState ? (
             <>
-            { loginText }
-            <Button onClick={handleClose} color="primary">
+              {loginText}
+              <Button onClick={handleClose} color="primary">
                 CLOSE
               </Button>
             </>
@@ -214,8 +301,8 @@ export default function SimpleTabs() {
           <div>
             <h2>Your Account</h2>
 
-            <Card onClick={handleOpenState} className={classes.secondRoot}>
-              <CardActionArea>
+            <Card className={classes.secondRoot}>
+              <CardActionArea onClick={handleAvatarOpen}>
                 <CardMedia
                   className={classes.media}
                   image={userInfo.avatar}
