@@ -15,6 +15,7 @@ import * as Yup from "yup";
 import { AuthContext } from "../contexts/AuthContext";
 import { Redirect } from "react-router-dom";
 import firebase from "../lib/firebase";
+import CircularIndeterminate from "../components/loadingCircle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,20 +31,43 @@ const useStyles = makeStyles((theme) => ({
     width: "50px",
     marginRight: ".4rem",
   },
+  hideThis: {
+    display: "none !important",
+  },
+  loader: {
+    margin: ".5rem 0 .5rem 0rem",
+    padding: "1rem",
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
 export default function FormDialog(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [loginText, setLoginText] = useState(
+    "Please enter your login information below. You can also use the email field to reset your password."
+  );
+  const [hideState, setHideState] = useState(false);
   const authContext = useContext(AuthContext);
   const {
     signInWithGoogle,
     signInWithEmailAndPassword,
     signInWithFacebook,
   } = authContext;
+  const [loading, setLoading] = useState(false);
+
+  const handleLoading = (loadingState) => {
+    setLoading(loadingState);
+  };
+
+  const handleHideState = (theState) => {
+    setHideState(theState);
+  };
 
   const handleGoogleClick = async () => {
     try {
+      handleLoading(true);
       await signInWithGoogle()
         .then(function (user) {
           // get user data from the auth trigger
@@ -67,25 +91,38 @@ export default function FormDialog(props) {
               avatar: userImg,
             };
 
-            firebase.firestore().collection("users").doc(email).set(account)
-            .then(() => console.log("Successfully added user info to database."))
-          } else{
-            console.log(`Account ${user.additionalUserInfo.name}`)
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(email)
+              .set(account)
+              .then(() => {
+                console.log("Successfully added user info to database.");
+                handleLoading(false);
+              });
+          } else {
+            console.log(`Account ${user.additionalUserInfo.name}`);
+            handleLoading(false);
           }
         })
-      .catch(function (error) {
+        .catch(function (error) {
           // Handle Errors here.
           console.log("There was an error.");
           console.error(error);
+          alert(`${error}. Please confirm and try again.`);
+          handleLoading(false);
         });
 
       handleClose();
     } catch (error) {
       console.error(error);
+      alert(`${error}. Please confirm and try again.`);
+      handleLoading(false);
     }
   };
 
   const handleFacebookClick = async () => {
+    handleLoading(true);
     try {
       await signInWithFacebook()
         .then(function (result) {
@@ -105,24 +142,54 @@ export default function FormDialog(props) {
               wishlist: [],
               avatar: imgURL,
             };
-            firebase.firestore().collection("users").doc(email).set(account)
-            .then(() => console.log("Successfully added user info to database."));
-          }else {
-            console.log(`Account ${result.additionalUserInfo.profile.email}`)
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(email)
+              .set(account)
+              .then(() => {
+                console.log("Successfully added user info to database.");
+                handleLoading(false);
+              });
+          } else {
+            console.log(`Account ${result.additionalUserInfo.profile.email}`);
           }
         })
-        
+
         .catch(function (error) {
           // Handle Errors here.
           console.log("There was an error.");
           console.error(error);
-        })
+          handleLoading(false);
+          alert(`${error}. Please confirm and try again.`);
+        });
       handleClose();
     } catch (error) {
       console.log(`${error} -- came from Dialog`);
       console.error(error);
+      handleLoading(false);
       alert(`${error}. Please confirm and try again.`);
     }
+  };
+
+  const handlePasswordReset = (email) => {
+    handleLoading(true);
+    const auth = firebase.auth();
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setLoginText(
+          `Email sent to ${email}. Please check your inbox in the next few minutes to reset your password.`
+        );
+        handleLoading(false);
+        handleHideState(true);
+      })
+      .catch((error) => {
+        setLoginText(`${error} Please confirm email ${email} and try again.`);
+        console.error(error);
+        handleHideState(true);
+        handleLoading(false);
+      });
   };
 
   const handleLoginState = () => {
@@ -146,6 +213,10 @@ export default function FormDialog(props) {
 
   const handleClose = () => {
     setOpen(false);
+    setLoginText(
+      "Please enter your login information below. You can also use the email field to send a password reset email."
+    );
+    handleHideState(false);
   };
 
   let redirect = null;
@@ -180,122 +251,150 @@ export default function FormDialog(props) {
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Login</DialogTitle>
-          <Button
-            className={classes.googleButton}
-            fullWidth
-            onClick={handleGoogleClick}
-            size="large"
-          >
-            <img
-              alt="Google"
-              className={classes.providerIcon}
-              src="/static/images/google-icon.svg"
-            />
-            Login with Google
-          </Button>
-          <Button
-            className={classes.googleButton}
-            fullWidth
-            onClick={handleFacebookClick}
-            size="large"
-          >
-            <img
-              alt="Facebook"
-              className={classes.providerIcon}
-              src="/static/images/facebook-icon.svg"
-            />
-            Login with Facebook
-          </Button>
-          <Formik
-            initialValues={{ email: "you@email.com", password: "" }}
-            validationSchema={Yup.object().shape({
-              email: Yup.string()
-                .email("Invalid email provided.")
-                .max(30)
-                .required("Must have email to login."),
-              password: Yup.string()
-                .min(8)
-                .max(30)
-                .required("Please add your password to login."),
-            })}
-            onSubmit={async (
-              values,
-              { setErrors, setStatus, setSubmitting }
-            ) => {
-              try {
-                console.log(values.email, values.password);
-                await signInWithEmailAndPassword(values.email, values.password);
-                handleClose();
-              } catch (error) {
-                console.error(error);
-                setStatus({ success: false });
-                setErrors({ submit: error.message });
-                setSubmitting(false);
-              }
-            }}
-          >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              /* and other goodies */
-            }) => (
-              <form noValidate onSubmit={handleSubmit} autoComplete="off">
-                <DialogContent>
-                  <DialogContentText>
-                    Please enter your login information below.
-                  </DialogContentText>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="email"
-                    name="email"
-                    label="Email Address"
-                    type="email"
-                    fullWidth
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.email}
-                    error={Boolean(touched.email && errors.email)}
-                    helperText={touched.email && errors.email}
-                    required
-                    tabIndex={0}
-                  />
-                  <TextField
-                    margin="dense"
-                    id="password"
-                    name="password"
-                    label="Password"
-                    type="password"
-                    fullWidth
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.password}
-                    error={Boolean(touched.password && errors.password)}
-                    helperText={touched.password && errors.password}
-                    required
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose} color="primary">
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={Boolean(errors.email || errors.password)}
-                    color="primary"
-                  >
-                    Confirm
-                  </Button>
-                </DialogActions>
-              </form>
-            )}
-          </Formik>
+          {hideState ? (
+            <>
+              {loginText}
+              {loading ? (
+                <div className={classes.loader}>
+                  <CircularIndeterminate></CircularIndeterminate>
+                </div>
+              ) : null}
+              <Button onClick={handleClose} color="primary">
+                CLOSE
+              </Button>
+            </>
+          ) : (
+            <>
+              <DialogTitle id="form-dialog-title">Login</DialogTitle>
+              <Button
+                className={classes.googleButton}
+                fullWidth
+                onClick={handleGoogleClick}
+                size="large"
+              >
+                <img
+                  alt="Google"
+                  className={classes.providerIcon}
+                  src="/static/images/google-icon.svg"
+                />
+                Login with Google
+              </Button>
+              <Button
+                className={classes.googleButton}
+                fullWidth
+                onClick={handleFacebookClick}
+                size="large"
+              >
+                <img
+                  alt="Facebook"
+                  className={classes.providerIcon}
+                  src="/static/images/facebook-icon.svg"
+                />
+                Login with Facebook
+              </Button>
+              {loading ? (
+                <div className={classes.loader}>
+                  <CircularIndeterminate></CircularIndeterminate>
+                </div>
+              ) : null}
+              <Formik
+                initialValues={{ email: "you@email.com", password: "" }}
+                validationSchema={Yup.object().shape({
+                  email: Yup.string()
+                    .email("Invalid email provided.")
+                    .max(30)
+                    .required("Must have email to login."),
+                  password: Yup.string()
+                    .min(8)
+                    .max(30)
+                    .required("Please add your password to login."),
+                })}
+                onSubmit={async (
+                  values,
+                  { setErrors, setStatus, setSubmitting }
+                ) => {
+                  try {
+                    console.log(values.email, values.password);
+                    await signInWithEmailAndPassword(
+                      values.email,
+                      values.password
+                    );
+                    handleClose();
+                  } catch (error) {
+                    console.error(error);
+                    setStatus({ success: false });
+                    setErrors({ submit: error.message });
+                    setSubmitting(false);
+                  }
+                }}
+              >
+                {({
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isSubmitting,
+                  /* and other goodies */
+                }) => (
+                  <form noValidate onSubmit={handleSubmit} autoComplete="off">
+                    <DialogContent>
+                      <DialogContentText>{loginText}</DialogContentText>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="email"
+                        name="email"
+                        label="Email Address"
+                        type="email"
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.email}
+                        error={Boolean(touched.email && errors.email)}
+                        helperText={touched.email && errors.email}
+                        required
+                        tabIndex={0}
+                      />
+                      <TextField
+                        margin="dense"
+                        id="password"
+                        name="password"
+                        label="Password"
+                        type="password"
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.password}
+                        error={Boolean(touched.password && errors.password)}
+                        helperText={touched.password && errors.password}
+                        required
+                      />
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        onClick={() => handlePasswordReset(values.email)}
+                        color="primary"
+                      >
+                        SEND PASSWORD RESET EMAIL
+                      </Button>
+                      <Button onClick={handleClose} color="primary">
+                        CANCEL
+                      </Button>
+                      <Button
+                        type="submit"
+                        disabled={Boolean(errors.email || errors.password)}
+                        color="primary"
+                      >
+                        CONFIRM
+                      </Button>
+                    </DialogActions>
+                  </form>
+                )}
+              </Formik>
+            </>
+          )}
         </Dialog>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, createContext } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -18,6 +18,13 @@ import Wishlist from "../routes/wishlist";
 import MyCollection from "../routes/collection";
 import { AuthContext } from "../contexts/AuthContext";
 import firebase from "../lib/firebase";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
+export let openState = createContext({ open: false });
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -75,6 +82,9 @@ export default function SimpleTabs() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [userInfo, setUserInfo] = useState({});
+  const [open, setOpen] = useState(false);
+  const [loginText, setLoginText] = useState("");
+  const [hideState, setHideState] = useState(false);
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
@@ -97,70 +107,149 @@ export default function SimpleTabs() {
             console.log("Error getting document:", error);
           });
       };
-
       getUserInfo();
     }
   }, [authContext]);
+
+  const handleHideState = (theState) => {
+    setHideState(theState);
+  };
+
+  const handlePasswordReset = (email) => {
+    const auth = firebase.auth();
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setLoginText(
+          `Email sent to ${email}. Please check your inbox in the next few minutes to reset your password.`
+        );
+
+        handleHideState(true);
+      })
+      .catch((error) => {
+        setLoginText(`${error} Please confirm email ${email} and try again.`);
+        console.error(error);
+        handleHideState(true);
+      });
+  };
+
+  const handleOpenState = () => {
+    setOpen(!open);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    open ? (openState = true) : (openState = false);
+  }, [open]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="simple tabs example"
+    <div>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          <Tab label="Collection" {...a11yProps(0)} />
-          <Tab label="Wishlist" {...a11yProps(1)} />
-          <Tab label="Your Account" {...a11yProps(2)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        <MyCollection></MyCollection>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Wishlist></Wishlist>
-      </TabPanel>
-      <TabPanel className={classes.tab3} value={value} index={2}>
-        <div>
-          <h2>Your Account</h2>
-          
-          <Card className={classes.secondRoot}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image={userInfo.avatar}
-                title={`${userInfo.userName}'s Account`}
-              />
-              <CardContent>
-                <Typography gutterBottom  component="h6">
-                  {userInfo.userName}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Your current game list: 
-                  {authContext.isAuthenticated && userInfo.collection ? (
-                    userInfo.collection.map((game) => {
-                      return ` ${game.name}, `;
-                    })
-                  ) : (
-                    <p>Loading...</p>
-                  )}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-
-              <Button size="small" color="primary">
-                SEND PASSWORD RESET EMAIL
+          {hideState ? (
+            <>
+            { loginText }
+            <Button onClick={handleClose} color="primary">
+                CLOSE
               </Button>
-            </CardActions>
-          </Card>
-        </div>
-      </TabPanel>
+            </>
+          ) : (
+            <>
+              <DialogTitle id="alert-dialog-title">
+                {"Send a password reset email?"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {loginText}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  CANCEL
+                </Button>
+                <Button
+                  onClick={() => handlePasswordReset(authContext.user.email)}
+                  color="primary"
+                  autoFocus
+                >
+                  CONFIRM
+                </Button>
+              </DialogActions>
+            </>
+          )}
+        </Dialog>
+      </div>
+
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="simple tabs example"
+          >
+            <Tab label="Collection" {...a11yProps(0)} />
+            <Tab label="Wishlist" {...a11yProps(1)} />
+            <Tab label="Your Account" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          <MyCollection></MyCollection>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Wishlist></Wishlist>
+        </TabPanel>
+        <TabPanel className={classes.tab3} value={value} index={2}>
+          <div>
+            <h2>Your Account</h2>
+
+            <Card onClick={handleOpenState} className={classes.secondRoot}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image={userInfo.avatar}
+                  title={`${userInfo.userName}'s Account`}
+                />
+                <CardContent>
+                  <Typography gutterBottom component="h6">
+                    {userInfo.userName}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    Your current game list:
+                    {authContext.isAuthenticated && userInfo.collection ? (
+                      userInfo.collection.map((game) => {
+                        return ` ${game.name}, `;
+                      })
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                <Button onClick={handleOpenState} size="small" color="primary">
+                  SEND PASSWORD RESET EMAIL
+                </Button>
+              </CardActions>
+            </Card>
+          </div>
+        </TabPanel>
+      </div>
     </div>
   );
 }

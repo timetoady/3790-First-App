@@ -212,20 +212,20 @@ export default function Collection() {
     setOpen(false);
   };
 
-  const handleClickOpen2 = (name, id, description, background_image, object) => {
+  const handleClickOpen2 = (
+    name,
+    id,
+    description,
+    background_image,
+    object
+  ) => {
     selectedGameHandler(
       collectionGameId,
       collectionGameName,
       collectionGameNameImg
     );
 
-    gameInfoModalHandler(
-      name,
-      id,
-      description,
-      background_image,
-      object
-    );
+    gameInfoModalHandler(name, id, description, background_image, object);
     setOpen2(true);
   };
 
@@ -259,7 +259,7 @@ export default function Collection() {
     setCollectionGameDescription(gameDescription);
     setCollectionGameNameImg(gameImg);
     setCollectedGameObject(object);
-    console.log(object)
+    console.log(object);
   };
 
   const handleGameDetails = async () => {
@@ -269,12 +269,11 @@ export default function Collection() {
         collection: firebase.firestore.FieldValue.arrayUnion(gameData.game),
       })
       .then(() => {
-        setTimeout(function() {
+        setTimeout(function () {
           // setSelectedGame("");
           setSearchTerm("");
-          setCollectedGameObject({})
-        }, 100)
-
+          setCollectedGameObject({});
+        }, 100);
       });
     console.log("Added new game to collection!");
     handleClose();
@@ -292,14 +291,13 @@ export default function Collection() {
         ),
       })
       .then(() => {
-        
-
         setSelectedGame("");
         setSearchTerm("");
         setCollectedGameObject({});
-      }).catch((error) =>{
-        console.error(error)
       })
+      .catch((error) => {
+        console.error(error);
+      });
 
     console.log(`Removed ${collectionGameName} from collection.`);
     handleClose2();
@@ -323,12 +321,11 @@ export default function Collection() {
 
   return (
     <div>
-  
-            <h2>{userEmail}'s Collection</h2>
-         
+      <h2>{userEmail}'s Collection</h2>
+
       <div className="collectionAnimation">
-        <div className={classes.search} >
-          <div className={classes.searchIcon} >
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
             <SearchIcon />
           </div>
           <InputBase
@@ -347,14 +344,7 @@ export default function Collection() {
         </div>
 
         <div className={classes.loader1}>
-          {loading ? (
-            <CircularIndeterminate></CircularIndeterminate>
-          )  
-          : 
-            null
-          }
-          
-         
+          {loading ? <CircularIndeterminate></CircularIndeterminate> : null}
         </div>
         <div>
           <Dialog
@@ -392,7 +382,6 @@ export default function Collection() {
           </Dialog>
         </div>
 
-       
         <div>
           <Dialog
             open={open2}
@@ -441,8 +430,7 @@ export default function Collection() {
         </div>
 
         <div className="searchResultsView">
-       
-        {searchResults && loading ? (<h3>Searching...</h3>) :  null}
+          {searchResults && loading ? <h3>Searching...</h3> : null}
           {searchResults.map((reply) => {
             return (
               <div
@@ -472,28 +460,27 @@ export default function Collection() {
               </div>
             );
           })}
-          
 
           {loading ? (
-            <CircularIndeterminate></CircularIndeterminate>
+            <div className={classes.loader1}>
+              <CircularIndeterminate></CircularIndeterminate>
+            </div>
           ) : (
-            
             collection.map((reply) => {
               return (
-                <div
-                  className="searchResults"
-                  key={reply.id}
-                  value={reply.id}
-                  
-                >
-                   <div className={classes.loader1}>
-         
-        </div>
-
+                <div className="searchResults" key={reply.id} value={reply.id}>
                   <div
                     variant="outlined"
                     color="primary"
-                    onClick={() => handleClickOpen2(reply.name, reply.id, reply.description, reply.background_image, reply)}
+                    onClick={() =>
+                      handleClickOpen2(
+                        reply.name,
+                        reply.id,
+                        reply.description,
+                        reply.background_image,
+                        reply
+                      )
+                    }
                   >
                     <h3>{reply.name}</h3>
 
