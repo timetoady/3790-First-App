@@ -12,9 +12,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 //import { GameContext } from "../contexts/APIcontext";
 import CircularIndeterminate from "../components/loadingCircle";
-import axios from 'axios'
+import axios from "axios";
 import firebase from "../lib/firebase";
-
 
 console.log(`Collection says auth state is ${AuthContext.isAuthenticated}`);
 const useStyles = makeStyles((theme) => ({
@@ -32,11 +31,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   description: {
-   "& p": {
-    color: "black !important"
-   },
-      
- 
+    "& p": {
+      color: "black !important",
+    },
   },
   search: {
     position: "relative",
@@ -80,15 +77,14 @@ const useStyles = makeStyles((theme) => ({
   },
   confirmImageBox: {
     alignItems: "center",
-    margin: "0 auto"
+    margin: "0 auto",
   },
   confirmImage: {
     maxWidth: "100%",
-
   },
-  loader1:{
-    margin: ".5rem 0 .5rem 2rem"
-  }
+  loader1: {
+    margin: ".5rem 0 .5rem 2rem",
+  },
 }));
 
 const getGames = async (query) => {
@@ -118,43 +114,43 @@ export default function Collection() {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [gameData, setGameData] = useState({})
+  const [gameData, setGameData] = useState({});
   const [collection, setCollection] = useState([]);
-  const [collectedGameObject, setCollectedGameObject] = useState({})
-  const [collectionGameId, setCollectionGameID] = useState("")
-  const [collectionGameName, setCollectionGameName] = useState("")
-  const [collectionGameDescription, setCollectionGameDescription] = useState("")
-  const [collectionGameNameImg, setCollectionGameNameImg] = useState("")
+  const [collectedGameObject, setCollectedGameObject] = useState({});
+  const [collectionGameId, setCollectionGameID] = useState("");
+  const [collectionGameName, setCollectionGameName] = useState("");
+  const [collectionGameDescription, setCollectionGameDescription] = useState(
+    ""
+  );
+  const [collectionGameNameImg, setCollectionGameNameImg] = useState("");
   const focusSearch = useRef(null);
-  const authContext = useContext(AuthContext)
-  const userEmail = authContext.user.email
-  
-  
+  const authContext = useContext(AuthContext);
+  const userEmail = authContext.user.email;
 
+  useEffect(() => {
+    let dbUser = firebase.firestore().collection("users").doc(userEmail);
 
-useEffect(() =>{
-  let dbUser = firebase.firestore().collection("users").doc(userEmail)
-  
-  const getCollection = () => {
-    showLoading()
-    dbUser.get().then(function(doc) {
-      if (doc.exists) {
-        console.log("Document data:", doc.data());
-          setCollection(doc.data().collection)
-          hideLoading()
-          
-      } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-          hideLoading()
-      }
-  }).catch(function(error) {
-      console.log("Error getting document:", error);
-  });
-   }
-   getCollection()
-
-}, [userEmail, collectedGameObject])
+    const getCollection = () => {
+      showLoading();
+      dbUser
+        .get()
+        .then(function (doc) {
+          if (doc.exists) {
+            console.log("Document data:", doc.data());
+            setCollection(doc.data().collection);
+            hideLoading();
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+            hideLoading();
+          }
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+    };
+    getCollection();
+  }, [userEmail, collectedGameObject]);
 
   useEffect(() => {
     focusSearch.current.focus();
@@ -162,7 +158,7 @@ useEffect(() =>{
 
   useEffect(() => {
     const getGameDetails = (searchTerm) => {
-      setLoading(true)
+      setLoading(true);
       axios({
         method: "GET",
         url: `https://rawg-video-games-database.p.rapidapi.com/games/${searchTerm}`,
@@ -171,11 +167,11 @@ useEffect(() =>{
           "x-rapidapi-key": process.env.REACT_APP_RAWG_GAMING_API_KEY,
         },
       }).then(function (response) {
-        console.log(response.data)
+        console.log(response.data);
         setGameData({
-          game: response.data
+          game: response.data,
         });
-        setLoading(false)
+        setLoading(false);
       });
     };
     const loadSelectedGame = async () => {
@@ -188,7 +184,6 @@ useEffect(() =>{
     loadSelectedGame();
   }, [selectedGame]);
 
-  
   useEffect(() => {
     let currentQuery = true;
     const controller = new AbortController();
@@ -217,7 +212,20 @@ useEffect(() =>{
     setOpen(false);
   };
 
-  const handleClickOpen2 = () => {
+  const handleClickOpen2 = (name, id, description, background_image, object) => {
+    selectedGameHandler(
+      collectionGameId,
+      collectionGameName,
+      collectionGameNameImg
+    );
+
+    gameInfoModalHandler(
+      name,
+      id,
+      description,
+      background_image,
+      object
+    );
     setOpen2(true);
   };
 
@@ -239,43 +247,63 @@ useEffect(() =>{
     setSelectedGameImg(gameImg);
   };
 
-  const gameInfoModalHandler = (gameName, gameID, gameDescription, gameImg, object) =>{
-    setCollectionGameName(gameName)
-    setCollectionGameID(gameID)
-    setCollectionGameDescription(gameDescription)
-    setCollectionGameNameImg(gameImg)
-    setCollectedGameObject(object)
-  }
+  const gameInfoModalHandler = (
+    gameName,
+    gameID,
+    gameDescription,
+    gameImg,
+    object
+  ) => {
+    setCollectionGameName(gameName);
+    setCollectionGameID(gameID);
+    setCollectionGameDescription(gameDescription);
+    setCollectionGameNameImg(gameImg);
+    setCollectedGameObject(object);
+    console.log(object)
+  };
 
- 
   const handleGameDetails = async () => {
-    const dbUser = firebase.firestore().collection("users").doc(userEmail)
-    dbUser.update({
-      collection: firebase.firestore.FieldValue.arrayUnion(gameData.game)
-    }).then(() =>{
-      setSelectedGame("")
-      setSearchTerm("")
+    const dbUser = firebase.firestore().collection("users").doc(userEmail);
+    dbUser
+      .update({
+        collection: firebase.firestore.FieldValue.arrayUnion(gameData.game),
+      })
+      .then(() => {
+        setTimeout(function() {
+          // setSelectedGame("");
+          setSearchTerm("");
+          setCollectedGameObject({})
+        }, 100)
 
-    })
-    console.log("Added new game to collection!")
+      });
+    console.log("Added new game to collection!");
     handleClose();
   };
 
   const handleRemoveFromCollection = async () => {
     console.log(collectedGameObject);
-    console.log(userEmail)
-    const dbUser = firebase.firestore().collection("users").doc(userEmail)
-    dbUser.update({
-      collection: firebase.firestore.FieldValue.arrayRemove(collectedGameObject)
-      
-    }).then(() =>{
-      setCollectedGameObject({})
-    })
-    
-    console.log(`Removed ${collectionGameName} from collection.`)
-    handleClose2();
+    console.log(userEmail);
 
-  }
+    const dbUser = firebase.firestore().collection("users").doc(userEmail);
+    dbUser
+      .update({
+        collection: firebase.firestore.FieldValue.arrayRemove(
+          collectedGameObject
+        ),
+      })
+      .then(() => {
+        
+
+        setSelectedGame("");
+        setSearchTerm("");
+        setCollectedGameObject({});
+      }).catch((error) =>{
+        console.error(error)
+      })
+
+    console.log(`Removed ${collectionGameName} from collection.`);
+    handleClose2();
+  };
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -292,7 +320,6 @@ useEffect(() =>{
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
-
 
   return (
     <div>
@@ -320,7 +347,11 @@ useEffect(() =>{
           Check
         </Button>
         <div className={classes.loader1}>
-          {loading ? <CircularIndeterminate ></CircularIndeterminate> : <h2>Results:</h2>}
+          {loading ? (
+            <CircularIndeterminate></CircularIndeterminate>
+          ) : (
+            <h2>Results:</h2>
+          )}
         </div>
         <div>
           <Dialog
@@ -333,29 +364,37 @@ useEffect(() =>{
               {`Do you want to add ${selectedGameName} to your collection?`}
             </DialogTitle>
             <div className={classes.confirmImageBox}>
-              {loading ? <CircularIndeterminate></CircularIndeterminate> : <img className={classes.confirmImage} src={selectedGameImg} alt={selectedGameName}></img>}
+              {loading ? (
+                <CircularIndeterminate></CircularIndeterminate>
+              ) : (
+                <img
+                  className={classes.confirmImage}
+                  src={selectedGameImg}
+                  alt={selectedGameName}
+                ></img>
+              )}
             </div>
             <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                
-              </DialogContentText>
+              <DialogContentText id="alert-dialog-description"></DialogContentText>
             </DialogContent>
-
 
             <DialogActions>
               <Button onClick={handleClose} color="primary">
-                Cancel
+                CANCEL
               </Button>
               <Button onClick={handleGameDetails} color="primary" autoFocus>
-                Confirm
+                CONFIRM
               </Button>
             </DialogActions>
           </Dialog>
         </div>
 
-
         <div className={classes.loader1}>
-          {loading ? <CircularIndeterminate ></CircularIndeterminate> : <h2>{userEmail}'s Collection</h2>}
+          {loading ? (
+            <CircularIndeterminate></CircularIndeterminate>
+          ) : (
+            <h2>{userEmail}'s Collection</h2>
+          )}
         </div>
         <div>
           <Dialog
@@ -368,34 +407,41 @@ useEffect(() =>{
               <h2>{collectionGameName}</h2>
             </DialogTitle>
             <div className={classes.confirmImageBox}>
-              {loading ? 
-              <CircularIndeterminate></CircularIndeterminate> : 
-              <img className={classes.confirmImage} src={collectionGameNameImg} alt={collectionGameName}></img>
- 
-              }
- 
+              {loading ? (
+                <CircularIndeterminate></CircularIndeterminate>
+              ) : (
+                <img
+                  className={classes.confirmImage}
+                  src={collectionGameNameImg}
+                  alt={collectionGameName}
+                ></img>
+              )}
             </div>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 <h2>Description</h2>
-                <div className={classes.description} dangerouslySetInnerHTML={{__html: `${collectionGameDescription}`}}></div>
+                <div
+                  className={classes.description}
+                  dangerouslySetInnerHTML={{
+                    __html: `${collectionGameDescription}`,
+                  }}
+                ></div>
               </DialogContentText>
             </DialogContent>
-
 
             <DialogActions>
               <Button onClick={handleClose2} autoFocus color="primary">
                 CLOSE
               </Button>
-              <Button onClick={() => selectedGameHandler(collectionGameId,
-                    collectionGameName,
-                    collectionGameNameImg), handleRemoveFromCollection} color="primary" >
+              <Button
+                onClick={() => handleRemoveFromCollection()}
+                color="primary"
+              >
                 REMOVE FROM COLLECTION?
               </Button>
             </DialogActions>
           </Dialog>
         </div>
-
 
         <div className="searchResultsView">
           {searchResults.map((reply) => {
@@ -426,40 +472,34 @@ useEffect(() =>{
               </div>
             );
           })}
-          <div>
-          </div>
-        
-          {loading ? <CircularIndeterminate ></CircularIndeterminate> 
-          : collection.map((reply) => {
-            return (
-              <div
-                className="searchResults"
-                key={reply.id}
-                value={reply.id}
-                onClick={() =>
-                  gameInfoModalHandler(
-                    reply.name,
-                    reply.id,
-                    reply.description,
-                    reply.background_image,
-                    reply
-                  ) 
-                }
-              >
-                <div
-                  variant="outlined"
-                  color="primary"
-                  onClick={handleClickOpen2}
-                >
-                  <h3>{reply.name}</h3>
+          
 
-                  <img src={reply.background_image} alt={reply.slug}></img>
-                  <p>Released: {reply.released}</p>
-                  <p>ID: {reply.id}</p>
+          {loading ? (
+            <CircularIndeterminate></CircularIndeterminate>
+          ) : (
+            collection.map((reply) => {
+              return (
+                <div
+                  className="searchResults"
+                  key={reply.id}
+                  value={reply.id}
+                  
+                >
+                  <div
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => handleClickOpen2(reply.name, reply.id, reply.description, reply.background_image, reply)}
+                  >
+                    <h3>{reply.name}</h3>
+
+                    <img src={reply.background_image} alt={reply.slug}></img>
+                    <p>Released: {reply.released}</p>
+                    <p>ID: {reply.id}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </div>
