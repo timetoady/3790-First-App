@@ -161,7 +161,7 @@ export default function FormDialog() {
                 // set account  doc  
                 const account = {
                   useruid: userUid,
-                  email: email,
+                  email,
                   userName: displayName,
                   collection: [],
                   wishlist: [],

@@ -73,7 +73,7 @@ const authContext = useContext(AuthContext)
             
           >
             {/* Here, have to have menu item handle open of modal */}
-            <MenuItem tabIndex={0} className={classes.menuItem} onClick={handleDialogToggle}>
+            <MenuItem tabIndex={-1} className={classes.menuItem} onClick={handleDialogToggle}>
               <Dialog  open={dialogOpen} onClose={handleDialogToggle}></Dialog>
             </MenuItem>
             <MenuItem tabIndex={0} className={classes.menuItem} onClick={handleMenuClose}>

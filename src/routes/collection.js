@@ -15,6 +15,7 @@ import CircularIndeterminate from "../components/loadingCircle";
 import axios from 'axios'
 import firebase from "../lib/firebase";
 
+
 console.log(`Collection says auth state is ${AuthContext.isAuthenticated}`);
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
+  },
+  description: {
+   "& p": {
+    color: "black !important"
+   },
+      
+ 
   },
   search: {
     position: "relative",
@@ -108,53 +116,49 @@ export default function Collection() {
   const [selectedGameName, setSelectedGameName] = useState("");
   const [selectedGameImg, setSelectedGameImg] = useState("");
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [loading, setLoading] = useState(false);
   const [gameData, setGameData] = useState({})
+  const [collection, setCollection] = useState([]);
+  const [collectedGameObject, setCollectedGameObject] = useState({})
+  const [collectionGameId, setCollectionGameID] = useState("")
+  const [collectionGameName, setCollectionGameName] = useState("")
+  const [collectionGameDescription, setCollectionGameDescription] = useState("")
+  const [collectionGameNameImg, setCollectionGameNameImg] = useState("")
   const focusSearch = useRef(null);
   const authContext = useContext(AuthContext)
   const userEmail = authContext.user.email
-  const dbUser = firebase.firestore().collection("users").doc(userEmail)
-  //const db = firebase.firestore()
+  
+  
 
-  const docRef = dbUser
 
-  docRef.get().then(function(doc) {
-    if (doc.exists) {
+useEffect(() =>{
+  let dbUser = firebase.firestore().collection("users").doc(userEmail)
+  
+  const getCollection = () => {
+    showLoading()
+    dbUser.get().then(function(doc) {
+      if (doc.exists) {
         console.log("Document data:", doc.data());
-        console.log(doc.data().collection[0].description)
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-    }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
+          setCollection(doc.data().collection)
+          hideLoading()
+          
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+          hideLoading()
+      }
+  }).catch(function(error) {
+      console.log("Error getting document:", error);
+  });
+   }
+   getCollection()
+
+}, [userEmail, collectedGameObject])
 
   useEffect(() => {
     focusSearch.current.focus();
   }, []);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const showLoading = () => {
-    setLoading(true);
-  };
-
-  const hideLoading = () => {
-    setLoading(false);
-  };
-
-  const selectedGameHandler = (gameID, gameName, gameImg) => {
-    setSelectedGame(gameID);
-    setSelectedGameName(gameName);
-    setSelectedGameImg(gameImg);
-  };
 
   useEffect(() => {
     const getGameDetails = (searchTerm) => {
@@ -184,16 +188,72 @@ export default function Collection() {
     loadSelectedGame();
   }, [selectedGame]);
 
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+  const showLoading = () => {
+    setLoading(true);
+  };
+
+  const hideLoading = () => {
+    setLoading(false);
+  };
+
+  const selectedGameHandler = (gameID, gameName, gameImg) => {
+    setSelectedGame(gameID);
+    setSelectedGameName(gameName);
+    setSelectedGameImg(gameImg);
+  };
+
+  const gameInfoModalHandler = (gameName, gameID, gameDescription, gameImg, object) =>{
+    setCollectionGameName(gameName)
+    setCollectionGameID(gameID)
+    setCollectionGameDescription(gameDescription)
+    setCollectionGameNameImg(gameImg)
+    setCollectedGameObject(object)
+  }
+
+ 
   const handleGameDetails = async () => {
-    console.log(gameData.game);
-    // this is where we'll send to the db, get reply
-    console.log(userEmail)
+    const dbUser = firebase.firestore().collection("users").doc(userEmail)
     dbUser.update({
       collection: firebase.firestore.FieldValue.arrayUnion(gameData.game)
+    }).then(() =>{
+      setSelectedGame("")
     })
     console.log("Added new game to collection!")
     handleClose();
   };
+
+  const handleRemoveFromCollection = async () => {
+    console.log(collectedGameObject);
+    console.log(userEmail)
+    const dbUser = firebase.firestore().collection("users").doc(userEmail)
+    dbUser.update({
+      collection: firebase.firestore.FieldValue.arrayRemove(collectedGameObject)
+      
+    }).then(() =>{
+      setCollectedGameObject({})
+    })
+    
+    console.log(`Removed ${collectionGameName} from collection.`)
+    handleClose2();
+
+  }
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -244,6 +304,7 @@ export default function Collection() {
             type="text"
             ref={focusSearch}
             onChange={handleChange}
+            autoFocus
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,
@@ -288,6 +349,51 @@ export default function Collection() {
             </DialogActions>
           </Dialog>
         </div>
+
+
+        <div className={classes.loader1}>
+          {loading ? <CircularIndeterminate ></CircularIndeterminate> : <h2>{userEmail}'s Collection</h2>}
+        </div>
+        <div>
+          <Dialog
+            open={open2}
+            onClose={handleClose2}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              <h2>{collectionGameName}</h2>
+            </DialogTitle>
+            <div className={classes.confirmImageBox}>
+              {loading ? 
+              <CircularIndeterminate></CircularIndeterminate> : 
+              <img className={classes.confirmImage} src={collectionGameNameImg} alt={collectionGameName}></img>
+ 
+              }
+ 
+            </div>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <h2>Description</h2>
+                <div className={classes.description} dangerouslySetInnerHTML={{__html: `${collectionGameDescription}`}}></div>
+              </DialogContentText>
+            </DialogContent>
+
+
+            <DialogActions>
+              <Button onClick={handleClose2} autoFocus color="primary">
+                CLOSE
+              </Button>
+              <Button onClick={() => selectedGameHandler(collectionGameId,
+                    collectionGameName,
+                    collectionGameNameImg), handleRemoveFromCollection} color="primary" >
+                REMOVE FROM COLLECTION?
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+
+
         <div className="searchResultsView">
           {searchResults.map((reply) => {
             return (
@@ -317,8 +423,40 @@ export default function Collection() {
               </div>
             );
           })}
+          <div>
+          </div>
+        
+          {loading ? <CircularIndeterminate ></CircularIndeterminate> 
+          : collection.map((reply) => {
+            return (
+              <div
+                className="searchResults"
+                key={reply.id}
+                value={reply.id}
+                onClick={() =>
+                  gameInfoModalHandler(
+                    reply.name,
+                    reply.id,
+                    reply.description,
+                    reply.background_image,
+                    reply
+                  ) 
+                }
+              >
+                <div
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleClickOpen2}
+                >
+                  <h3>{reply.name}</h3>
 
-          {/* {renderGames} */}
+                  <img src={reply.background_image} alt={reply.slug}></img>
+                  <p>Released: {reply.released}</p>
+                  <p>ID: {reply.id}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
