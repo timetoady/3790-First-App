@@ -188,6 +188,26 @@ useEffect(() =>{
     loadSelectedGame();
   }, [selectedGame]);
 
+  
+  useEffect(() => {
+    let currentQuery = true;
+    const controller = new AbortController();
+    const loadGames = async () => {
+      if (!searchTerm) return setSearchResults([]);
+      await sleep(350);
+      if (currentQuery) {
+        showLoading();
+        const games = await getGames(searchTerm, controller);
+        setSearchResults(games);
+        hideLoading();
+      }
+    };
+    loadGames();
+    return () => {
+      currentQuery = false;
+      controller.abort();
+    };
+  }, [searchTerm]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -234,6 +254,8 @@ useEffect(() =>{
       collection: firebase.firestore.FieldValue.arrayUnion(gameData.game)
     }).then(() =>{
       setSelectedGame("")
+      setSearchTerm("")
+
     })
     console.log("Added new game to collection!")
     handleClose();
@@ -271,25 +293,6 @@ useEffect(() =>{
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  useEffect(() => {
-    let currentQuery = true;
-    const controller = new AbortController();
-    const loadGames = async () => {
-      if (!searchTerm) return setSearchResults([]);
-      await sleep(350);
-      if (currentQuery) {
-        showLoading();
-        const games = await getGames(searchTerm, controller);
-        setSearchResults(games);
-        hideLoading();
-      }
-    };
-    loadGames();
-    return () => {
-      currentQuery = false;
-      controller.abort();
-    };
-  }, [searchTerm]);
 
   return (
     <div>
