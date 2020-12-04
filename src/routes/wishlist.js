@@ -434,7 +434,7 @@ export default function Wishlist() {
                 onClick={() => handleRemoveFromWishlist()}
                 color="primary"
               >
-                REMOVE FROM COLLECTION?
+                REMOVE FROM WISHLIST?
               </Button>
             </DialogActions>
           </Dialog>
