@@ -108,7 +108,7 @@ export default function SimpleMenu() {
   };
   
   return (
-    <div className={classes.root}>
+    <div className={classes.root} id="menuRoot">
       <div
         className={classes.menu}
         id="simple-menu"
@@ -154,13 +154,13 @@ export default function SimpleMenu() {
         )}
 
         {authContext.isAuthenticated ? (
-         <Link to="/user" className={classes.avatar}> <Avatar
+         <Link to="/user" className={classes.avatar} id="avatarCircle"> <Avatar
             src={userInfo.avatar}
             alt={authContext.user.name}
           ></Avatar></Link>
         ) : (
           //this is where I'll hook up the avatar photo when I get it from the database context
-          <Avatar></Avatar>
+          <Avatar id="avatarCircle"></Avatar>
         )}
 
         </div>

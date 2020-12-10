@@ -106,6 +106,7 @@ export default function FormDialog() {
       {authContext.isAuthenticated ? (
         <Typography
           className={classes.button}
+          id="signupHome"
           color="primary"
         >
          <Link to="/">Home</Link> 
@@ -114,6 +115,7 @@ export default function FormDialog() {
         <Typography
           className={classes.button}
           color="primary"
+          id="signupHome1"
           onClick={handleLoginState}
         >
           SIGN UP

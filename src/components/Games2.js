@@ -95,7 +95,7 @@ function Games2() {
 
   return (
     <div>
-      <h1 className={classes.pageTitle}>Games App</h1>
+      <h1 className={classes.pageTitle} id="mainTitle">Games App</h1>
       <h2>Top Games</h2>
     <div className={classes.root}>
       

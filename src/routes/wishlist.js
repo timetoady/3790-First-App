@@ -104,8 +104,6 @@ const getGames = async (query) => {
 
 export default function Wishlist() {
   const classes = useStyles();
-  //const gameContext = useContext(GameContext);
-  //const { getGameDetails, gameData } = gameContext;
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedGame, setSelectedGame] = useState("");
@@ -309,13 +307,6 @@ export default function Wishlist() {
     setSearchTerm(event.target.value);
   };
 
-  // const logGameData = () => {
-  //   console.log(`Selected game ID: ${selectedGame}`);
-  //   console.log(`Selected game name: ${selectedGameName}`);
-  //   console.log(`Selected game IMG URL: ${selectedGameImg}`);
-  //   console.log("Game file in gameData:");
-  //   console.log(gameData.game);
-  // };
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -326,7 +317,7 @@ export default function Wishlist() {
   
             <h2>{userEmail}'s Wishlist</h2>
          
-      <div className="collectionAnimation">
+      <div className="wishlistAnimation">
         <div className={classes.search} >
           <div className={classes.searchIcon} >
             <SearchIcon />
@@ -336,6 +327,7 @@ export default function Wishlist() {
             value={searchTerm}
             type="text"
             ref={focusSearch}
+            id="searchWishlist"
             onChange={handleChange}
             autoFocus
             classes={{

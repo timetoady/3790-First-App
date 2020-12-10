@@ -307,13 +307,6 @@ export default function Collection() {
     setSearchTerm(event.target.value);
   };
 
-  // const logGameData = () => {
-  //   console.log(`Selected game ID: ${selectedGame}`);
-  //   console.log(`Selected game name: ${selectedGameName}`);
-  //   console.log(`Selected game IMG URL: ${selectedGameImg}`);
-  //   console.log("Game file in gameData:");
-  //   console.log(gameData.game);
-  // };
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -334,6 +327,7 @@ export default function Collection() {
             type="text"
             ref={focusSearch}
             onChange={handleChange}
+            id="searchCollection"
             autoFocus
             classes={{
               root: classes.inputRoot,

@@ -1,5 +1,5 @@
 
-.makeStyles-root-1{
+#menuRoot{
   
   border-image-source: linear-gradient(to right, rgba(73,74,216,0.6) 0%,rgba(73,74,216,1) 11%,rgba(73,74,216,1) 24%,rgba(255,181,145,1) 25%,rgba(73,74,216,1) 26%,rgba(73,74,216,1) 49%,rgba(255,181,145,1) 50%,rgba(73,74,216,1) 51%,rgba(73,74,216,1) 74%,rgba(255,181,145,1) 75%,rgba(73,74,216,1) 76%,rgba(73,74,216,1) 89%,rgba(73,74,216,0.6) 100%);
   border-image-slice: 1;
@@ -10,11 +10,11 @@
 
 }
 
-.MuiAvatar-circle{
+#avatarCircle{
   margin: auto !important;
 }
 @media screen and (max-width: 600px) {
-  .makeStyles-root-1{
+  #menuRoot{
     display: grid !important;
     gap: 0rem;
     grid-template-columns: 1fr;
@@ -31,19 +31,19 @@
     grid-area: loginUser;
     justify-content: space-between;
   }
-  .makeStyles-pageTitle-29{
+ #mainTitle{
     margin-top: 0rem;
     padding-top: 0 !important; 
   }
   .MuiDialogActions-spacing{
     flex-direction: column;
   }
-  .makeStyles-button-16, .makeStyles-button-17 {
+  #signupHome, #signupHome1 {
     padding-right: 0 !important;
     margin-right: .2rem !important;
     width: 87% !important;
   }
-  .makeStyles-inputInput-67{
+  #searchCollection, #searchWishlist{
     width: 72vw !important;
   }
 }
