@@ -1,11 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Button, Menu, MenuItem, Avatar, Typography } from "@material-ui/core/";
+import { Avatar, Typography } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "./Dialog";
 import Signup from "./Signup";
+import ResponsiveDialog from "./about"
 import { AuthContext } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import firebase from "../lib/firebase";
+//import { FullscreenExit } from "@material-ui/icons";
+//import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
 //Here, import LoginContext
@@ -19,19 +22,40 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    backgroundColor: "#000077e8",
-    "&:hover": {
-      background: "#f00",
-    },
+    border: "none",
+    padding: ".75rem .2rem .75rem .75rem",
+    width: "100%",
+    textDecoration: "none",
     color: "#f2f2f2",
+    fontSize: '1rem',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: 400,
+    lineHeight: 1.5,
+    letterSpacing: '0.00938em'
   },
-  menu: {},
+  menu: {
+    display: "flex",
+    justifyContent: "",
+    textAlign: "left",
+    margin: "auto 0",
+
+  },
   menuItem: {
     "&:hover": {
       background: "#000077",
     },
     color: "#f2f2f2",
   },
+  userInfo: {
+    display: "flex",
+
+  },
+  loginDiv: {
+    display: "flex",
+  },
+  avatar:{
+    margin: "auto",
+  }
 }));
 
 export default function SimpleMenu() {
@@ -70,9 +94,9 @@ export default function SimpleMenu() {
   }, [authContext]);
 
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -85,15 +109,7 @@ export default function SimpleMenu() {
   
   return (
     <div className={classes.root}>
-      <Button
-        className={classes.button}
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        Menu
-      </Button>
-      <Menu
+      <div
         className={classes.menu}
         id="simple-menu"
         anchorEl={anchorEl}
@@ -101,48 +117,54 @@ export default function SimpleMenu() {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        {/* Here, have to have menu item handle open of modal */}
-        <MenuItem
-          tabIndex={-1}
+   
+        <Link
+          tabIndex={0}
           className={classes.menuItem}
-          onClick={handleDialogToggle}
+          onClick={handleMenuClose}
         >
-          <Dialog open={dialogOpen} onClose={handleDialogToggle}></Dialog>
-        </MenuItem>
-        <MenuItem
+          <ResponsiveDialog></ResponsiveDialog>
+        </Link>
+        <div
           tabIndex={0}
           className={classes.menuItem}
           onClick={handleMenuClose}
         >
           <Signup></Signup>
-        </MenuItem>
-        <MenuItem
-          tabIndex={0}
+        </div>
+      </div>
+      
+      <div className={classes.menu} id="simple-menu2">
+      <div
+          tabIndex={-1}
+          
           className={classes.menuItem}
-          onClick={handleMenuClose}
+          onClick={handleDialogToggle}
         >
-          About
-        </MenuItem>
-      </Menu>
-      {console.log(`Auth state: ${authContext.isAuthenticated}`)},
-      <div className={classes.root}>
+          <Dialog open={dialogOpen} onClose={handleDialogToggle}></Dialog>
+        </div>
+
+        <div className={classes.loginDiv}>
         {authContext.isAuthenticated ? (
-          <Typography className="userName">
+          <Typography className={classes.button}>
             <Link to="/user">{authContext.user.name}</Link>
           </Typography>
         ) : (
-          <Typography>Welcome, visitor!</Typography>
+          <Typography className={classes.button}>Welcome, visitor!</Typography>
         )}
 
         {authContext.isAuthenticated ? (
-          <Avatar
+         <Link to="/user" className={classes.avatar}> <Avatar
             src={userInfo.avatar}
             alt={authContext.user.name}
-          ></Avatar>
+          ></Avatar></Link>
         ) : (
           //this is where I'll hook up the avatar photo when I get it from the database context
           <Avatar></Avatar>
         )}
+
+        </div>
+
       </div>
     </div>
   );

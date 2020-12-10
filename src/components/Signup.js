@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     border: "none",
-    padding: "0 4rem 0 0",
+    padding: ".75rem",
+    cursor: "pointer",
     width: "100%",
     textDecoration: "none",
     color: "#f2f2f2",
@@ -115,7 +116,7 @@ export default function FormDialog() {
           color="primary"
           onClick={handleLoginState}
         >
-          Sign Up
+          SIGN UP
         </Typography>
       )}
 

@@ -23,9 +23,16 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     border: "none",
-    padding: "0 4rem 0 0",
-    color: "#f2f2f2",
+    padding: ".75rem",
+    cursor: "pointer",
     width: "100%",
+    textDecoration: "none",
+    color: "#f2f2f2",
+    fontSize: '1rem',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontWeight: 400,
+    lineHeight: 1.5,
+    letterSpacing: `0.00938em`
   },
   providerIcon: {
     width: "50px",
@@ -233,7 +240,7 @@ export default function FormDialog(props) {
           color="primary"
           onClick={handleLoginState}
         >
-          Logout
+          LOGOUT
         </Typography>
       ) : (
         <Typography
@@ -241,7 +248,7 @@ export default function FormDialog(props) {
           color="primary"
           onClick={handleLoginState}
         >
-          Login
+          LOGIN
         </Typography>
       )}
       <div>

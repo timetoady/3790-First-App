@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
   },
+  pageTitle: {
+    fontSize: "3rem" },
   title: {
     color: "#f2f2f2",
     paddingTop: '.5rem',
@@ -93,6 +95,7 @@ function Games2() {
 
   return (
     <div>
+      <h1 className={classes.pageTitle}>Games App</h1>
       <h2>Top Games</h2>
     <div className={classes.root}>
       
