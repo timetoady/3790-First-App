@@ -26,9 +26,9 @@ const Platforms = () => {
 
   const [platforms, setPlatforms] = useState([]);
 
-  const handleChange = () => {
-    setPlatforms(gameNumSortHandler(allPlatforms));
-  };
+  // const handleChange = () => {
+  //   setPlatforms(gameNumSortHandler(allPlatforms));
+  // };
 
   useEffect(() => {
     const results = gameNumSortHandler(allPlatforms)
