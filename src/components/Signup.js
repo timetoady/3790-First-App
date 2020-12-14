@@ -109,7 +109,7 @@ export default function FormDialog() {
           id="signupHome"
           color="primary"
         >
-         <Link to="/">Home</Link> 
+         <Link to="/">HOME</Link> 
         </Typography>
       ) : (
         <Typography

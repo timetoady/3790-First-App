@@ -59,9 +59,9 @@ const Platforms = () => {
     <LazyLoad placeholderSrc="Tile Incoming">
       <div>
         <h2>All currently listed platforms ({platformData.count}): </h2>
-        <button className="theButton" onClick={handleChange}>
+        {/* <button className="theButton" onClick={handleChange}>
           Sort by highest number of games:
-        </button>
+        </button> */}
         {platforms.map((result) => {
           return (
             <div style={platStyle} key={result.id}>
