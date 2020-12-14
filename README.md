@@ -1,8 +1,9 @@
-# Games and Game Platforms App
+# Welcome to GamesApp
+###### A React, Material UI, and API call showcase
 
-This games app is a sample showcase of some React elements working together. Using it, you can login, either by signing up with your email, password, and URL for an avatar image, or via Facebook or Google.
+This games app is a sample showcase of some React elements working together. Using it, you can login, either by signing up with your email, password, and URL for an avatar image, or via Facebook or Google. Inidividual account info is created using Firebase, and user info is stored using Firestore.
 
-Once logged in, you can search for your favorite games, and select from the results to add them to your collection or wishlist. You can also go to My Account and view some basic information, send a password reset email, or change your avatar by clicking on your image.
+Once logged in, you can search for your favorite games via the RAWG Games API, and select from the results to add them to your collection or wishlist. You can also go to My Account and view some basic information, send a password reset email, or change your avatar by clicking on your image.
 
 Clicking on any game in your Collection or Wishlist will provide a game description, and allow you remove the game from that list.
 
