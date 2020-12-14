@@ -25,7 +25,14 @@ All components functional and act on state using useState hooks.
 
 Provided via [API Context](https://github.com/timetoady/3790-First-App/blob/master/src/contexts/APIcontext.js) and [AuthContext](https://github.com/timetoady/3790-First-App/blob/master/src/contexts/AuthContext.js) to pass API data and login data, respectively.
 
-###
+### Custom Components
+* [Dialog.js](https://github.com/timetoady/3790-First-App/blob/master/src/components/Dialog.js)
+* [Games2.js](https://github.com/timetoady/3790-First-App/blob/master/src/components/Games2.js)
+* [Signup.js](https://github.com/timetoady/3790-First-App/blob/master/src/components/Signup.js)
+* [about.js](https://github.com/timetoady/3790-First-App/blob/master/src/components/about.js)
+* [loadingCircle.js](https://github.com/timetoady/3790-First-App/blob/master/src/components/loadingCircle.js)
+* [tabs.js](https://github.com/timetoady/3790-First-App/blob/master/src/components/tabs.js)
+* [ui.js](https://github.com/timetoady/3790-First-App/blob/master/src/components/ui.js)
 
 ### Signup and Login Forms
 
