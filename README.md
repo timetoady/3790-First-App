@@ -1,8 +1,19 @@
 # Games and Game Platforms App
 
-Just a little app displaying select video game platforms and games. 
+This games app is a sample showcase of some React elements working together. Using it, you can login, either by signing up with your email, password, and URL for an avatar image, or via Facebook or Google.
+
+Once logged in, you can search for your favorite games, and select from the results to add them to your collection or wishlist. You can also go to My Account and view some basic information, send a password reset email, or change your avatar by clicking on your image.
+
+Clicking on any game in your Collection or Wishlist will provide a game description, and allow you remove the game from that list.
+
+Please enjoy GamesApp!
 
 ## Features
+
+### Conditional Logic and Array Methods
+
+Several good places for this, but particularly [in Collection](https://github.com/timetoady/3790-First-App/blob/master/src/routes/collection.js) to render search results once they have finished loading. 
+
 
 ### All Functional Components, All the Time
 
